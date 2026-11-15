@@ -174,7 +174,7 @@
 <div ref="{{ appRef }}" style="display:flex; height:100vh; width:100%; background:#07080a; color:#f5f7fa; overflow:hidden; userSelect:none">
 
   <sc-if value="{{ newModalOpen }}" hint-placeholder-val="{{ false }}">
-    <div sc-camel-on-click="{{ closeNewModal }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
+    <div sc-camel-on-pointer-down="{{ ovDown }}" sc-camel-on-click="{{ ovNew }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
       <div sc-camel-on-click="{{ stopClick }}" style="width:380px; background:#14171c; border:1px solid #23262d; borderRadius:14px; padding:24px; boxShadow:0 24px 60px rgba(0,0,0,0.55); display:flex; flexDirection:column; gap:14px">
         <div style="fontSize:12px; fontWeight:800; letterSpacing:0.14em; color:#6b7482">NUEVO EJERCICIO</div>
         <input value="{{ newTitleDraft }}" sc-camel-on-change="{{ setNewTitleDraft }}" sc-camel-on-key-down="{{ stopClick }}" sc-camel-auto-focus="true" spellcheck="false" placeholder="Nombre del ejercicio" style="background:#0b0d10; border:1px solid #23262d; borderRadius:8px; padding:10px 12px; color:#fff; fontSize:16px; fontWeight:700; outline:none">
@@ -218,7 +218,7 @@
   </sc-if>
 
   <sc-if value="{{ renameOpen }}" hint-placeholder-val="{{ false }}">
-    <div sc-camel-on-click="{{ closeRename }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:600; display:flex; alignItems:center; justifyContent:center">
+    <div sc-camel-on-pointer-down="{{ ovDown }}" sc-camel-on-click="{{ ovRename }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:600; display:flex; alignItems:center; justifyContent:center">
       <div sc-camel-on-click="{{ stopClick }}" style="width:380px; background:#14171c; border:1px solid #23262d; borderRadius:14px; padding:24px; boxShadow:0 24px 60px rgba(0,0,0,0.55); display:flex; flexDirection:column; gap:14px">
         <div style="fontSize:12px; fontWeight:800; letterSpacing:0.14em; color:#6b7482">EDITAR EJERCICIO</div>
         <input value="{{ renameDraft }}" sc-camel-on-change="{{ setRenameDraft }}" sc-camel-on-key-down="{{ stopClick }}" sc-camel-auto-focus="true" spellcheck="false" placeholder="Nuevo nombre" style="background:#0b0d10; border:1px solid #23262d; borderRadius:8px; padding:10px 12px; color:#fff; fontSize:16px; fontWeight:700; outline:none">
@@ -245,7 +245,7 @@
   </sc-if>
 
   <sc-if value="{{ saveModalOpen }}" hint-placeholder-val="{{ false }}">
-    <div sc-camel-on-click="{{ closeSaveModal }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
+    <div sc-camel-on-pointer-down="{{ ovDown }}" sc-camel-on-click="{{ ovSave }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
       <div sc-camel-on-click="{{ stopClick }}" style="width:440px; maxWidth:calc(100vw - 32px); background:#14171c; border:1px solid #23262d; borderRadius:14px; padding:24px; boxShadow:0 24px 60px rgba(0,0,0,0.55); display:flex; flexDirection:column; gap:14px">
         <div style="fontSize:12px; fontWeight:800; letterSpacing:0.14em; color:#6b7482">GUARDAR EJERCICIO</div>
         <input value="{{ saveNameDraft }}" sc-camel-on-change="{{ setSaveNameDraft }}" sc-camel-on-key-down="{{ stopClick }}" sc-camel-auto-focus="true" spellcheck="false" placeholder="Nombre del ejercicio" style="background:#0b0d10; border:1px solid #23262d; borderRadius:8px; padding:10px 12px; color:#fff; fontSize:16px; fontWeight:700; outline:none">
@@ -349,6 +349,7 @@
               </div>
               <button sc-camel-on-click="{{ q.run }}" title="Ejecutar en el campo" style="padding:8px 12px; borderRadius:8px; border:none; background:#e30613; color:#fff; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer">EJECUTAR</button>
               <button sc-camel-on-click="{{ q.edit }}" title="Editar" style="padding:8px 10px; borderRadius:8px; border:1px solid #23262d; background:#14171c; color:#9aa4b2; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer" style-hover="color:#fff">EDITAR</button>
+              <button sc-camel-on-click="{{ q.dup }}" title="Duplicar consigna" style="padding:8px 10px; borderRadius:8px; border:1px solid #23262d; background:#14171c; color:#9aa4b2; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer" style-hover="color:#fff">DUPLICAR</button>
               <button sc-camel-on-click="{{ q.remove }}" title="Borrar consigna" style="background:none; border:none; color:#6b7482; cursor:pointer; fontSize:14px; padding:0 2px" style-hover="color:#f0343c">✕</button>
             </div>
           </sc-for>
@@ -358,7 +359,7 @@
   </sc-if>
 
   <sc-if value="{{ exportModalOpen }}" hint-placeholder-val="{{ false }}">
-    <div sc-camel-on-click="{{ closeExportModal }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
+    <div sc-camel-on-pointer-down="{{ ovDown }}" sc-camel-on-click="{{ ovExport }}" style="position:fixed; inset:0; background:rgba(0,0,0,0.6); zIndex:500; display:flex; alignItems:center; justifyContent:center">
       <div sc-camel-on-click="{{ stopClick }}" style="width:380px; background:#14171c; border:1px solid #23262d; borderRadius:14px; padding:24px; boxShadow:0 24px 60px rgba(0,0,0,0.55); display:flex; flexDirection:column; gap:14px">
         <div style="fontSize:12px; fontWeight:800; letterSpacing:0.14em; color:#6b7482">GUARDAR EJERCICIOS</div>
         <input value="{{ exportNameDraft }}" sc-camel-on-change="{{ setExportNameDraft }}" sc-camel-on-key-down="{{ stopClick }}" sc-camel-auto-focus="true" spellcheck="false" placeholder="Nombre del archivo" style="background:#0b0d10; border:1px solid #23262d; borderRadius:8px; padding:10px 12px; color:#fff; fontSize:16px; fontWeight:700; outline:none">
@@ -505,6 +506,19 @@
           <input type="color" value="{{ cfgC2 }}" sc-camel-on-change="{{ setC2 }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
         </label>
       </div>
+      <div style="fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6; marginTop:4px">COLOR DE LAS FLECHAS</div>
+      <div style="display:grid; gridTemplateColumns:1fr 1fr 1fr; gap:9px">
+        <label style="display:flex; flexDirection:column; gap:5px; fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6">CARRERA
+          <input type="color" value="{{ cfgArun }}" sc-camel-on-change="{{ setArun }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
+        </label>
+        <label style="display:flex; flexDirection:column; gap:5px; fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6">PASE
+          <input type="color" value="{{ cfgApass }}" sc-camel-on-change="{{ setApass }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
+        </label>
+        <label style="display:flex; flexDirection:column; gap:5px; fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6">CONDUCCIÓN
+          <input type="color" value="{{ cfgAdrib }}" sc-camel-on-change="{{ setAdrib }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
+        </label>
+      </div>
+      <button sc-camel-on-click="{{ resetArrowCfg }}" style="padding:9px; borderRadius:10px; border:1px solid #23262d; background:none; color:#8b95a6; fontSize:9px; fontWeight:800; letterSpacing:0.12em; cursor:pointer">RESTABLECER COLORES DE FLECHAS</button>
       <div style="fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6; marginTop:4px">ICONO SUPERIOR (ESCUDO / LOGO)</div>
       <div style="display:flex; gap:9px">
         <label style="flex:1; display:flex; alignItems:center; justifyContent:center; padding:11px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.12em; cursor:pointer">SUBIR IMAGEN
@@ -532,9 +546,8 @@
       </div>
       <div style="display:flex; flexDirection:column; gap:3px; minWidth:180px; flex:1 1 260px">
         <div style="fontSize:9px; fontWeight:800; letterSpacing:0.28em; color:#6b7482; whiteSpace:nowrap">DISEÑADOR DE TAREAS</div>
-        <input value="{{ title }}" sc-camel-on-change="{{ setTitle }}" spellcheck="false" style="background:#14171c; border:1px solid #23262d; borderRadius:6px; padding:6px 12px; color:#fff; fontSize:26px; fontWeight:900; letterSpacing:-0.01em; textTransform:uppercase; width:100%; minWidth:0; outline:none; textOverflow:ellipsis">
+        <div style="color:#fff; fontSize:26px; fontWeight:900; letterSpacing:-0.01em; textTransform:uppercase; lineHeight:1.1; whiteSpace:nowrap">AC CENTER</div>
       </div>
-      <button sc-camel-on-click="{{ openNewModal }}" title="Nuevo ejercicio en blanco" style="padding:11px 18px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; flexShrink:0; whiteSpace:nowrap" style-hover="background:#1c2027">NUEVO</button>
       <button sc-camel-on-click="{{ saveExercise }}" style="padding:11px 18px; borderRadius:10px; border:none; background:#2563eb; color:#fff; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; flexShrink:0; whiteSpace:nowrap" style-hover="background:#1d4ed8">GUARDAR</button>
       <div style="marginLeft:auto; display:flex; alignItems:center; flexWrap:wrap; gap:10px; flexShrink:1; minWidth:0">
         <div style="fontSize:10px; fontWeight:800; letterSpacing:0.14em; color:#6b7482; whiteSpace:nowrap; flexShrink:0">{{ counterLabel }}</div>
@@ -566,6 +579,17 @@
               <sc-if value="{{ noSaved }}" hint-placeholder-val="{{ true }}">
                 <div style="padding:16px 10px; fontSize:11px; color:#6b7482; textAlign:center">Sin ejercicios guardados</div>
               </sc-if>
+              <div style="padding:8px 6px 0; borderTop:1px solid #23262d; marginTop:4px">
+                <sc-if value="{{ fileNotLinked }}" hint-placeholder-val="{{ true }}">
+                  <button sc-camel-on-click="{{ linkFile }}" title="Elige tu archivo .json: cada guardado se escribirá directamente en él" style="width:100%; padding:8px; borderRadius:7px; border:1px solid #2563eb; background:#1d3a78; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer">VINCULAR ARCHIVO .JSON</button>
+                </sc-if>
+                <sc-if value="{{ fileLinked }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex; gap:6px; alignItems:center">
+                    <button sc-camel-on-click="{{ linkFile }}" style="flex:1; padding:8px; borderRadius:7px; border:1px solid #23262d; background:#14301f; color:#7ee2a0; fontSize:10px; fontWeight:800; letterSpacing:0.04em; cursor:pointer; textAlign:left; overflow:hidden; textOverflow:ellipsis; whiteSpace:nowrap">{{ fileLabel }}</button>
+                    <button sc-camel-on-click="{{ unlinkFile }}" title="Desvincular archivo" style="padding:8px 10px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; cursor:pointer">×</button>
+                  </div>
+                </sc-if>
+              </div>
               <div style="display:flex; gap:6px; padding:8px 6px 4px; borderTop:1px solid #23262d; marginTop:4px">
                 <button sc-camel-on-click="{{ exportAll }}" style="flex:1; padding:8px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer" style-hover="background:#2c323b">GUARDAR EJERCICIOS</button>
                 <label style="flex:1; padding:8px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer; textAlign:center" style-hover="background:#2c323b">
@@ -576,7 +600,6 @@
             </div>
           </sc-if>
         </div>
-        <button sc-camel-on-click="{{ exportPng }}" style="padding:11px 18px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; flexShrink:0; whiteSpace:nowrap" style-hover="background:#1c2027">IMAGEN</button>
         <button sc-camel-on-click="{{ toggleFullscreen }}" title="Pantalla completa" style="width:42px; height:42px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer; flexShrink:0" style-hover="background:#1c2027">
           <svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.3" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"></path></svg>
         </button>
@@ -630,6 +653,10 @@
       <button sc-camel-on-click="{{ delFrame }}" title="Eliminar fase actual" style="width:42px; height:42px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#9aa4b2; display:flex; alignItems:center; justifyContent:center; cursor:pointer" style-hover="background:#1c2027; color:#f0343c">
         <svg width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.2" sc-camel-stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg>
       </button>
+      <button sc-camel-on-click="{{ exportVideo }}" disabled="{{ videoDisabled }}" title="Descargar la animación en vídeo MP4" style="{{ videoBtnStyle }}">
+        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"></path></svg>
+        {{ videoBtnLabel }}
+      </button>
       <button sc-camel-on-click="{{ clearAll }}" title="Limpiar" style="display:flex; alignItems:center; justifyContent:center; gap:8px; height:42px; padding:0 16px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#f0343c; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer" style-hover="background:#1c2027">
         <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"></path></svg>
         LIMPIAR
@@ -638,15 +665,15 @@
         <svg width="13" height="13" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><path d="M3 8h11a5 5 0 0 1 0 10H8M3 8l4-4M3 8l4 4"></path></svg>
         DESHACER
       </button>
-      <button sc-camel-on-click="{{ exportVideo }}" disabled="{{ videoDisabled }}" title="Descargar la animación en vídeo MP4" style="{{ videoBtnStyle }}">
-        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"></path></svg>
-        {{ videoBtnLabel }}
+      <button sc-camel-on-click="{{ exportPng }}" title="Exportar imagen" style="display:flex; alignItems:center; justifyContent:center; gap:8px; height:42px; padding:0 16px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#9aa4b2; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; whiteSpace:nowrap" style-hover="background:#1c2027; color:#fff">
+        <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-9 9"></path></svg>
+        EXPORTAR IMAGEN
       </button>
-      <button sc-camel-on-click="{{ toggleAsst }}" title="Asistente: da instrucciones en lenguaje natural" style="{{ asstBtnStyle }}">
+      <div style="marginLeft:auto; fontSize:11px; fontWeight:700; letterSpacing:0.06em; color:#6b7482">{{ hint }}</div>
+      <button sc-camel-on-click="{{ toggleAsst }}" title="Asistente: da instrucciones en lenguaje natural" style="{{ asstBtnStyle }}; margin-left:12px">
         <svg width="14" height="14" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.2" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"></path></svg>
         ASISTENTE
       </button>
-      <div style="marginLeft:auto; fontSize:11px; fontWeight:700; letterSpacing:0.06em; color:#6b7482">{{ hint }}</div>
     </div>
 
     <div style="{{ fieldWrapStyle }}">
@@ -667,9 +694,16 @@
             <marker id="ar" sc-camel-view-box="0 0 10 10" sc-camel-ref-x="8" sc-camel-ref-y="5" sc-camel-marker-width="5" sc-camel-marker-height="5" orient="auto-start-reverse">
               <path d="M0,1 L9,5 L0,9 z" fill="#fff"></path>
             </marker>
+            <sc-for list="{{ markers }}" as="m" hint-placeholder-count="0">
+              <marker id="{{ m.id }}" sc-camel-view-box="0 0 10 10" sc-camel-ref-x="8" sc-camel-ref-y="5" sc-camel-marker-width="5" sc-camel-marker-height="5" orient="auto-start-reverse">
+                <path d="M0,1 L9,5 L0,9 z" fill="{{ m.color }}"></path>
+              </marker>
+            </sc-for>
           </defs>
           <sc-for list="{{ arrows }}" as="a" hint-placeholder-count="0">
-            <path d="{{ a.d }}" stroke="{{ a.color }}" sc-camel-stroke-width="3.5" sc-camel-stroke-dasharray="{{ a.dash }}" sc-camel-stroke-linecap="round" sc-camel-marker-end="url(#ar)" sc-camel-vector-effect="non-scaling-stroke" fill="none"></path>
+            <path d="{{ a.d }}" stroke="{{ a.halo }}" sc-camel-stroke-width="{{ a.haloW }}" sc-camel-stroke-linecap="round" sc-camel-vector-effect="non-scaling-stroke" fill="none"></path>
+            <path d="{{ a.d }}" stroke="{{ a.color }}" sc-camel-stroke-width="{{ a.w }}" sc-camel-stroke-dasharray="{{ a.dash }}" sc-camel-stroke-linecap="round" sc-camel-marker-end="{{ a.marker }}" sc-camel-vector-effect="non-scaling-stroke" fill="none"></path>
+            <path d="{{ a.d }}" stroke="rgba(0,0,0,0.001)" sc-camel-stroke-width="22" sc-camel-stroke-linecap="round" sc-camel-vector-effect="non-scaling-stroke" fill="none" sc-camel-on-pointer-down="{{ a.grab }}" style="{{ a.hitStyle }}"></path>
           </sc-for>
           <sc-if value="{{ hasDraft }}" hint-placeholder-val="{{ false }}">
             <path d="{{ draftD }}" stroke="rgba(255,255,255,0.65)" sc-camel-stroke-width="3.5" sc-camel-stroke-dasharray="6 8" sc-camel-stroke-linecap="round" sc-camel-vector-effect="non-scaling-stroke" fill="none"></path>
@@ -678,6 +712,28 @@
 
         <sc-if value="{{ hasMarq }}" hint-placeholder-val="{{ false }}">
           <div style="{{ marqStyle }}"></div>
+        </sc-if>
+
+        <sc-for list="{{ ahandles }}" as="h" hint-placeholder-count="0">
+          <div sc-camel-on-pointer-down="{{ h.down }}" title="Arrastra para cambiar tamaño y rotación" style="{{ h.style }}"></div>
+        </sc-for>
+        <sc-if value="{{ hasArrowBar }}" hint-placeholder-val="{{ false }}">
+          <div sc-camel-on-pointer-down="{{ stopEv }}" sc-camel-on-double-click="{{ stopEv }}" style="{{ arrowBarStyle }}">
+            <sc-for list="{{ arrowColors }}" as="c" hint-placeholder-count="0">
+              <button sc-camel-on-click="{{ c.pick }}" title="Color de la flecha" style="{{ c.style }}"></button>
+            </sc-for>
+            <label title="Otro color" style="width:22px; height:22px; borderRadius:50%; overflow:hidden; position:relative; cursor:pointer; border:2px solid #fff; background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red); flexShrink:0">
+              <input type="color" value="{{ arrowColorValue }}" sc-camel-on-change="{{ arrowCustom }}" style="position:absolute; inset:-6px; width:40px; height:40px; opacity:0; cursor:pointer">
+            </label>
+            <span style="width:1px; height:20px; background:#3a3f49; margin:0 2px"></span>
+            <button sc-camel-on-click="{{ arrowRotL }}" title="Girar -15°" style="{{ arrowBtn }}">⟲</button>
+            <button sc-camel-on-click="{{ arrowRotR }}" title="Girar +15°" style="{{ arrowBtn }}">⟳</button>
+            <button sc-camel-on-click="{{ arrowSmaller }}" title="Más corta" style="{{ arrowBtn }}">−</button>
+            <button sc-camel-on-click="{{ arrowBigger }}" title="Más larga" style="{{ arrowBtn }}">+</button>
+            <button sc-camel-on-click="{{ arrowThinner }}" title="Más fina" style="{{ arrowBtn }}">▁</button>
+            <button sc-camel-on-click="{{ arrowThicker }}" title="Más gruesa" style="{{ arrowBtn }}">▃</button>
+            <button sc-camel-on-click="{{ arrowDel }}" title="Eliminar flecha" style="{{ arrowBtn }}">✕</button>
+          </div>
         </sc-if>
 
         <sc-for list="{{ items }}" as="it" hint-placeholder-count="0">
@@ -878,6 +934,7 @@ class Component extends DCLogic {
     cfg: { design: 'stripes', c1: '#e30613', c2: '#f4f4f4', logo: '' },
     savedOpen: false,
     saved: [],
+    fileName: '', fileNeedsPerm: false,
     dorsales: true,
     orient: false,
     knob: false,
@@ -916,6 +973,25 @@ class Component extends DCLogic {
     });
   }
 
+  // Recalcula la orientación de los jugadores que miran a un objetivo (balón, portería, centro...)
+  reaim(f) {
+    const r = this.fieldRef.current ? this.fieldRef.current.getBoundingClientRect() : null;
+    const W = (r && r.width) || 1000, H = (r && r.height) || 650;
+    f.items = f.items.map(p => {
+      if (p.kind !== 'player' || !p.look || p.locked) return p;
+      let tg = null;
+      if (p.look === 'ball') tg = f.items.find(i => i.kind === 'ball');
+      else if (p.look === 'goal') {
+        const goals = f.items.filter(i => i.kind === 'goal' || i.kind === 'minigoal');
+        tg = goals.slice().sort((a, b) => Math.hypot(a.x - p.x, a.y - p.y) - Math.hypot(b.x - p.x, b.y - p.y))[0];
+      } else if (p.look === 'center') tg = { x: 50, y: 50 };
+      if (!tg) return p;
+      const dx = (tg.x - p.x) * W / 100, dy = (tg.y - p.y) * H / 100;
+      if (!dx && !dy) return p;
+      const dir = ((Math.round(Math.atan2(dx, -dy) * 180 / Math.PI) % 360) + 360) % 360;
+      return Object.assign({}, p, { dir: (dir + 180) % 360 });
+    });
+  }
   pct(e) {
     const r = this.fieldRef.current.getBoundingClientRect();
     return {
@@ -925,7 +1001,7 @@ class Component extends DCLogic {
   }
 
   loadCfg() {
-    const d = { design: 'stripes', c1: '#e30613', c2: '#f4f4f4', logo: '' };
+    const d = { design: 'stripes', c1: '#e30613', c2: '#f4f4f4', logo: '', arun: '#ffffff', apass: '#ffd166', adrib: '#7dd3fc' };
     try {
       const c = JSON.parse(localStorage.getItem('tactics-config') || '{}');
       return this.cleanCfg(Object.assign({}, d, c));
@@ -937,6 +1013,9 @@ class Component extends DCLogic {
       design: designs.indexOf(c.design) >= 0 ? c.design : 'stripes',
       c1: hex.test(c.c1) ? c.c1 : '#e30613',
       c2: hex.test(c.c2) ? c.c2 : '#f4f4f4',
+      arun: hex.test(c.arun) ? c.arun : '#ffffff',
+      apass: hex.test(c.apass) ? c.apass : '#ffd166',
+      adrib: hex.test(c.adrib) ? c.adrib : '#7dd3fc',
       logo: typeof c.logo === 'string' && /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+\/=]+$/.test(c.logo) ? c.logo : ''
     };
   }
@@ -944,6 +1023,7 @@ class Component extends DCLogic {
     const cfg = this.cleanCfg(Object.assign({}, this.state.cfg, patch));
     try { localStorage.setItem('tactics-config', JSON.stringify(cfg)); } catch (e) {}
     this.setState({ cfg: cfg });
+    if (patch && 'logo' in patch) this.syncFile({ escudo: cfg.logo });
   }
   pickLogo = e => {
     const f = e.target.files && e.target.files[0];
@@ -968,6 +1048,94 @@ class Component extends DCLogic {
   writeSavedList(list) {
     localStorage.setItem('tactics-exercises', JSON.stringify(list));
     this.setState({ saved: list });
+    this.syncFile({ tareas: list });
+  }
+  // ---- Archivo .json vinculado (File System Access API; el manejador se guarda en IndexedDB) ----
+  fsOk() { return typeof window.showOpenFilePicker === 'function'; }
+  idb(mode, fn) {
+    return new Promise((res, rej) => {
+      const r = indexedDB.open('tactics-fs', 1);
+      r.onupgradeneeded = () => r.result.createObjectStore('h');
+      r.onerror = () => rej(r.error);
+      r.onsuccess = () => {
+        const tx = r.result.transaction('h', mode);
+        const rq = fn(tx.objectStore('h'));
+        tx.oncomplete = () => res(rq && rq.result);
+        tx.onerror = () => rej(tx.error);
+      };
+    });
+  }
+  async restoreFile() {
+    try {
+      const h = await this.idb('readonly', st => st.get('file'));
+      if (!h) return;
+      this.fileHandle = h;
+      const ok = (await h.queryPermission({ mode: 'readwrite' })) === 'granted';
+      this.setState({ fileName: h.name, fileNeedsPerm: !ok });
+    } catch (e) {}
+  }
+  linkFile = async () => {
+    if (!this.fsOk()) { alert('Tu navegador no permite guardar directamente en un archivo. Usa Chrome o Edge.'); return; }
+    try {
+      let h = this.fileHandle;
+      if (h && this.state.fileNeedsPerm) {
+        if ((await h.requestPermission({ mode: 'readwrite' })) !== 'granted') return;
+      } else {
+        [h] = await window.showOpenFilePicker({ types: [{ description: 'Ejercicios (JSON)', accept: { 'application/json': ['.json'] } }], multiple: false });
+        if ((await h.requestPermission({ mode: 'readwrite' })) !== 'granted') return;
+        this.fileHandle = h;
+        await this.idb('readwrite', st => st.put(h, 'file'));
+      }
+      // fusiona lo que haya en el archivo con lo local y escribe el resultado
+      let raw = null;
+      try { const t = await (await h.getFile()).text(); if (t.trim()) raw = JSON.parse(t); } catch (e) {}
+      // formato antiguo: lista de tareas; formato nuevo: { tareas, consignas, escudo, nombre }
+      const inc = Array.isArray(raw) ? { tareas: raw } : (raw && typeof raw === 'object' ? raw : {});
+      const current = this.loadSavedList();
+      const ids = new Set(current.map(x => x.id));
+      const merged = current.concat((Array.isArray(inc.tareas) ? inc.tareas : []).filter(x => x && typeof x.id === 'string' && !ids.has(x.id)));
+      const reqs = this.state.asstReqs.slice();
+      (Array.isArray(inc.consignas) ? inc.consignas : []).forEach(x => {
+        const txt = typeof x === 'string' ? x : (x && typeof x.text === 'string' ? x.text : '');
+        const clean = txt.trim().slice(0, 300);
+        if (clean && reqs.length < 200 && !reqs.some(c => c.text.toLowerCase() === clean.toLowerCase())) {
+          reqs.push({ id: 'r' + Date.now() + '-' + (this.asstSeq++), text: clean, name: x && typeof x.name === 'string' ? x.name.slice(0, 60) : '', cat: x && typeof x.cat === 'string' ? x.cat.slice(0, 30) : '' });
+        }
+      });
+      let escudo = this.state.cfg.logo;
+      if (!escudo && typeof inc.escudo === 'string') {
+        escudo = this.cleanCfg({ logo: inc.escudo }).logo;
+        if (escudo) { const cfg = this.cleanCfg(Object.assign({}, this.state.cfg, { logo: escudo })); try { localStorage.setItem('tactics-config', JSON.stringify(cfg)); } catch (e) {} this.setState({ cfg: cfg }); }
+      }
+      this.setState({ fileName: h.name, fileNeedsPerm: false });
+      try { localStorage.setItem('tactics-assistant-requests', JSON.stringify(reqs)); } catch (e) {}
+      this.setState({ asstReqs: reqs });
+      this.writeSavedList(merged);
+      this.syncFile({ tareas: merged, consignas: reqs, escudo: escudo });
+    } catch (e) {}
+  };
+  unlinkFile = async () => {
+    this.fileHandle = null;
+    try { await this.idb('readwrite', st => st.delete('file')); } catch (e) {}
+    this.setState({ fileName: '', fileNeedsPerm: false });
+  };
+  async syncFile(over) {
+    const h = this.fileHandle;
+    if (!h) return;
+    const o = over || {};
+    const list = {
+      formato: 'ac-center', version: 2, nombre: 'AC CENTER',
+      escudo: 'escudo' in o ? o.escudo : this.state.cfg.logo,
+      tareas: o.tareas || this.loadSavedList(),
+      consignas: (o.consignas || this.state.asstReqs).map(x => ({ id: x.id, name: x.name || '', cat: x.cat || '', text: x.text }))
+    };
+    try {
+      if ((await h.queryPermission({ mode: 'readwrite' })) !== 'granted') { this.setState({ fileNeedsPerm: true }); return; }
+      const w = await h.createWritable();
+      await w.write(JSON.stringify(list, null, 2));
+      await w.close();
+      this.setState({ fileNeedsPerm: false });
+    } catch (e) { this.setState({ fileNeedsPerm: true }); }
   }
   countPlayers() {
     return Math.max(0, ...this.state.frames.map(f => f.items.filter(i => i.kind === 'player').length));
@@ -1098,6 +1266,7 @@ class Component extends DCLogic {
   };
   componentDidMount() {
     this.setState({ saved: this.loadSavedList(), cfg: this.loadCfg(), asstReqs: this.asstLoadReqs() });
+    this.restoreFile();
     this.mv = e => {
       if (this.marq) {
         const p = this.pct(e);
@@ -1113,6 +1282,7 @@ class Component extends DCLogic {
             ? Object.assign({}, it, { x: Math.max(0, Math.min(100, it.x + dx)), y: Math.max(0, Math.min(100, it.y + dy)) }) : it);
           f.arrows = f.arrows.map((a, i) => ais.indexOf(i) >= 0
             ? Object.assign({}, a, { x1: a.x1 + dx, y1: a.y1 + dy, x2: a.x2 + dx, y2: a.y2 + dy }) : a);
+          this.reaim(f);
         });
         this.history.pop();
       } else if (this.rot) {
@@ -1124,7 +1294,7 @@ class Component extends DCLogic {
         if (!e.shiftKey) dir = Math.round(dir / 15) * 15;
         this.mutate(f => {
           const i = f.items.findIndex(x => x.id === o.id);
-          if (i >= 0) f.items[i] = Object.assign({}, f.items[i], { dir: dir });
+          if (i >= 0) f.items[i] = Object.assign({}, f.items[i], { dir: dir, look: null });
         });
         this.history.pop();
       } else if (this.rz) {
@@ -1145,11 +1315,19 @@ class Component extends DCLogic {
           if (i >= 0) f.items[i] = Object.assign({}, f.items[i], patch);
         });
         this.history.pop();
+      } else if (this.ah) {
+        const p = this.pct(e), o = this.ah;
+        this.mutate(f => {
+          const a = f.arrows[o.ai]; if (!a) return;
+          f.arrows[o.ai] = Object.assign({}, a, o.end === 1 ? { x1: p.x, y1: p.y } : { x2: p.x, y2: p.y });
+        });
+        this.history.pop();
       } else if (this.drag) {
         const p = this.pct(e);
         this.mutate(f => {
           const i = f.items.findIndex(x => x.id === this.drag);
           if (i >= 0) f.items[i] = Object.assign({}, f.items[i], p);
+          this.reaim(f);
         });
         this.history.pop();
       } else if (this.state.draft) {
@@ -1177,6 +1355,7 @@ class Component extends DCLogic {
         });
         return;
       }
+      if (this.ah) { this.ah = null; return; }
       if (this.rot) { this.rot = null; return; }
       if (this.rz) { this.rz = null; return; }
       if (this.drag) { this.drag = null; return; }
@@ -1353,6 +1532,27 @@ class Component extends DCLogic {
   };
 
   noMenu = e => e.preventDefault();
+
+  arrowEdit(ai, fn) {
+    const r = this.fieldRef.current.getBoundingClientRect();
+    this.mutate(f => {
+      const a = f.arrows[ai]; if (!a) return;
+      f.arrows[ai] = Object.assign({}, a, fn(a, r.width, r.height));
+    });
+  }
+  arrowTransform(ai, deg, k) {
+    this.arrowEdit(ai, (a, W, H) => {
+      const mx = (a.x1 + a.x2) / 2, my = (a.y1 + a.y2) / 2;
+      const rad = deg * Math.PI / 180, c = Math.cos(rad), s = Math.sin(rad);
+      const tr = (x, y) => {
+        const dx = (x - mx) * W / 100, dy = (y - my) * H / 100;
+        const rx = (dx * c - dy * s) * k, ry = (dx * s + dy * c) * k;
+        return [Math.max(0, Math.min(100, mx + rx * 100 / W)), Math.max(0, Math.min(100, my + ry * 100 / H))];
+      };
+      const p1 = tr(a.x1, a.y1), p2 = tr(a.x2, a.y2);
+      return { x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1] };
+    });
+  }
 
   arrowD(a) {
     const x1 = a.x1 * 10, y1 = a.y1 * 10, x2 = a.x2 * 10, y2 = a.y2 * 10;
@@ -1743,7 +1943,7 @@ class Component extends DCLogic {
         const tg = this.asstResolve(f, t);
         if (!tg.length) return { msg: 'No he encontrado qué girar. Ejemplo: «rota las dos porterías pequeñas 180 grados».' };
         let n = 0;
-        tg.forEach(it => { if (it.locked) return; it.dir = (((it.dir || 0) + deg) % 360 + 360) % 360; n++; });
+        tg.forEach(it => { if (it.locked) return; it.dir = (((it.dir || 0) + deg) % 360 + 360) % 360; it.look = null; n++; });
         return { msg: 'Girados ' + n + (n === 1 ? ' elemento ' : ' elementos ') + deg + '°.', changed: n > 0, touched: ids(tg), orient: tg.some(i => i.kind === 'player') };
       }
     }
@@ -1753,17 +1953,17 @@ class Component extends DCLogic {
       const subj = key ? t.slice(0, key.index) : t, obj = key ? t.slice(key.index + key[0].length) : t;
       const sp = this.asstPlayers(f, subj);
       let subjects = (sp.specific || sp.generic) ? sp.list : (/\b(lo|los|le|este|ese|ultimo)\b/.test(subj) && this.asstResolve(f, subj).length ? this.asstResolve(f, subj) : f.items.filter(i => i.kind === 'player'));
-      let target = null, tName = '', fixedDir = null, perPlayer = null;
+      let target = null, tName = '', fixedDir = null, perPlayer = null, lookKey = null;
       const op = this.asstPlayers(f, obj);
       if (/\b(balon\w*|pelota\w*)/.test(obj)) {
         const b = this.asstFirstBall(f);
         if (!b) return { msg: 'No hay ningún balón en el campo.' };
-        target = b; tName = 'el balón';
+        target = b; tName = 'el balón'; lookKey = 'ball';
       } else if (/\bporteri\w*/.test(obj)) {
         const goals = f.items.filter(i => i.kind === 'goal' || i.kind === 'minigoal');
         if (!goals.length) return { msg: 'No hay ninguna portería en el campo.' };
         perPlayer = p => goals.slice().sort((a, b) => Math.hypot(a.x - p.x, a.y - p.y) - Math.hypot(b.x - p.x, b.y - p.y))[0];
-        tName = 'la portería';
+        tName = 'la portería'; lookKey = 'goal';
       } else if (op.specific && op.list.length) {
         target = op.list[0]; tName = 'el ' + label(op.list[0]);
       } else if (this.asstKind(obj) && this.asstKind(obj) !== 'player' && this.asstFirstOf(f, obj)) {
@@ -1773,7 +1973,7 @@ class Component extends DCLogic {
         const vy = (/\babajo\b/.test(obj) ? 1 : 0) - (/\barriba\b/.test(obj) ? 1 : 0);
         fixedDir = ((Math.round(Math.atan2(vx, -vy) * 180 / Math.PI) % 360) + 360) % 360; tName = 'esa dirección';
       } else if (/\bcentr\w*/.test(obj)) {
-        target = { x: 50, y: 50 }; tName = 'el centro';
+        target = { x: 50, y: 50 }; tName = 'el centro'; lookKey = 'center';
       } else {
         return { msg: 'No he entendido hacia dónde deben mirar. Prueba con «mirando al balón», «hacia la portería» o «hacia arriba».' };
       }
@@ -1788,7 +1988,7 @@ class Component extends DCLogic {
           const dx = (tg.x - p.x) * ctx.W / 100, dy = (tg.y - p.y) * ctx.H / 100;
           dir = ((Math.round(Math.atan2(dx, -dy) * 180 / Math.PI) % 360) + 360) % 360;
         }
-        p.dir = (dir + 180) % 360; n++; done.push(p);   // hueco del arco hacia el objetivo; el arco queda detrás
+        p.dir = (dir + 180) % 360; p.look = lookKey; n++; done.push(p);   // hueco del arco hacia el objetivo; el arco queda detrás
       });
       if (!n) return { msg: 'No hay jugadores que orientar.' };
       return { msg: n + (n === 1 ? ' jugador mira' : ' jugadores miran') + ' ahora hacia ' + tName + '.' + (locked ? ' (' + locked + ' bloqueados sin cambiar)' : ''), changed: true, orient: true, touched: ids(done) };
@@ -2075,6 +2275,7 @@ class Component extends DCLogic {
   asstWriteReqs(list) {
     try { localStorage.setItem('tactics-assistant-requests', JSON.stringify(list)); } catch (e) {}
     this.setState({ asstReqs: list });
+    this.syncFile({ consignas: list });
   }
   asstSaveReq = () => {
     const text = (this.state.asstDraft || '').trim() || this.asstHist[this.asstHist.length - 1] || '';
@@ -2097,6 +2298,17 @@ class Component extends DCLogic {
     else list = [{ id: 'r' + Date.now() + '-' + (this.asstSeq++), text: text, name: name, cat: cat }].concat(list);
     this.asstWriteReqs(list);
     this.setState({ asstLibText: '', asstLibName: '', asstLibEdit: null, asstLibCatNew: false, asstLibCatOpen: false, asstLibMsg: s.asstLibEdit ? 'Consigna actualizada.' : 'Consigna guardada.' });
+  };
+  asstLibDup = (id) => {
+    const list = this.state.asstReqs.slice();
+    const i = list.findIndex(x => x.id === id);
+    if (i < 0) return;
+    if (list.length >= 200) { this.setState({ asstLibMsg: 'Has llegado al máximo de 200 consignas.' }); return; }
+    const o = list[i];
+    const copy = { id: 'r' + Date.now() + '-' + (this.asstSeq++), text: o.text, name: ((o.name || o.text.slice(0, 40)) + ' (copia)').slice(0, 60), cat: o.cat || '' };
+    list.splice(i + 1, 0, copy);
+    this.asstWriteReqs(list);
+    this.setState({ asstLibEdit: copy.id, asstLibName: copy.name, asstLibCat: copy.cat, asstLibText: copy.text, asstLibMsg: 'Consigna duplicada. Edítala y pulsa ACTUALIZAR.' });
   };
   asstLibClear = () => this.setState({ asstLibText: '', asstLibName: '', asstLibCat: '', asstLibEdit: null, asstLibMsg: '', asstLibCatNew: false, asstLibCatOpen: false });
 
@@ -2319,6 +2531,7 @@ class Component extends DCLogic {
       name: q.name || '', hasName: !!q.name, cat: q.cat || '', hasCat: !!q.cat, text: q.text,
       run: () => { this.setState({ asstLibOpen: false }); this.asstSend(q.text); },
       edit: () => this.setState({ asstLibEdit: q.id, asstLibName: q.name || '', asstLibCat: q.cat || '', asstLibText: q.text, asstLibMsg: '' }),
+      dup: () => this.asstLibDup(q.id),
       remove: () => { if (this.state.asstLibEdit === q.id) this.asstLibClear(); this.asstDelReq(q.id); }
     }));
     const items = v.items.map((it, idx) => {
@@ -2393,11 +2606,45 @@ class Component extends DCLogic {
       };
     });
 
+    const aDefault = a => a.kind === 'pass' ? cfg.apass : a.kind === 'dribble' ? cfg.adrib : cfg.arun;
+    const aBuiltin = a => a.kind === 'pass' ? '#ffd166' : a.kind === 'dribble' ? '#7dd3fc' : '#ffffff';
+    const aHead = a => a.ucol || (aDefault(a).toLowerCase() !== aBuiltin(a) ? aDefault(a) : null);
+    const aSel = ai => !st.playing && st.masel.indexOf(ai) >= 0;
+    const mkId = c => 'ar-' + String(c).replace(/[^0-9a-zA-Z]/g, '');
+    const markerSet = {};
+    v.arrows.forEach(a => { const h = aHead(a); if (h) markerSet[mkId(h)] = h; });
+    const markers = Object.keys(markerSet).map(id => ({ id, color: markerSet[id] }));
     const arrows = v.arrows.map((a, ai) => ({
       d: this.arrowD(a),
-      color: !st.playing && st.masel.indexOf(ai) >= 0 ? '#e30613' : a.kind === 'pass' ? '#ffd166' : a.kind === 'dribble' ? '#7dd3fc' : '#ffffff',
-      dash: a.kind === 'run' ? '18 14' : ''
+      color: a.ucol || aDefault(a),
+      w: a.sw || 3.5,
+      halo: aSel(ai) ? 'rgba(227,6,19,0.55)' : 'none',
+      haloW: (a.sw || 3.5) + 7,
+      marker: aHead(a) ? 'url(#' + mkId(aHead(a)) + ')' : 'url(#ar)',
+      dash: a.kind === 'run' ? '18 14' : '',
+      hitStyle: { pointerEvents: st.playing || tool ? 'none' : 'stroke', cursor: 'pointer', touchAction: 'none' },
+      grab: e => {
+        if (st.playing || tool) return;
+        e.stopPropagation();
+        this.push(); this.gdrag = this.pct(e);
+        if (!(aSel(ai) && st.masel.length + st.msel.length > 1)) this.setState({ sel: null, msel: [], masel: [ai] });
+      }
     }));
+    const selA = !st.playing && !tool && st.masel.length === 1 && !st.msel.length ? st.masel[0] : -1;
+    const aS = selA >= 0 ? v.arrows[selA] : null;
+    const ahandles = aS ? [1, 2].map(end => ({
+      down: e => { e.stopPropagation(); this.push(); this.ah = { ai: selA, end }; },
+      style: { position: 'absolute', left: aS['x' + end] + '%', top: aS['y' + end] + '%', width: '15px', height: '15px', transform: 'translate(-50%,-50%)', borderRadius: '50%', background: '#fff', border: '3px solid #e30613', boxSizing: 'border-box', cursor: 'crosshair', touchAction: 'none', zIndex: 300 }
+    })) : [];
+    const arrowPalette = ['#ffffff', '#ffd166', '#7dd3fc', '#e30613', '#22c55e', '#f97316', '#111827'];
+    const curCol = aS ? (aS.ucol || aDefault(aS)) : '#ffffff';
+    const arrowColors = aS ? arrowPalette.map(c => ({
+      pick: () => this.arrowEdit(selA, () => ({ ucol: c })),
+      style: { width: '22px', height: '22px', borderRadius: '50%', background: c, border: curCol.toLowerCase() === c ? '3px solid #e30613' : '2px solid #fff', boxSizing: 'border-box', cursor: 'pointer', padding: 0, flexShrink: 0 }
+    })) : [];
+    const abBtn = { width: '26px', height: '26px', borderRadius: '7px', border: '1px solid #3a3f49', background: '#14171c', color: '#e7ebf1', fontSize: '14px', fontWeight: 800, cursor: 'pointer', padding: 0, flexShrink: 0, lineHeight: 1 };
+    const aMidX = aS ? (aS.x1 + aS.x2) / 2 : 0, aMidY = aS ? (aS.y1 + aS.y2) / 2 : 0;
+    const arrowBarStyle = aS ? { position: 'absolute', left: '50%', top: aMidY < 35 ? '97%' : '3%', transform: aMidY < 35 ? 'translate(-50%,-100%)' : 'translate(-50%,0)', display: 'flex', alignItems: 'center', gap: '5px', padding: '6px 8px', background: 'rgba(11,13,16,0.94)', border: '1px solid #3a3f49', borderRadius: '12px', zIndex: 400, boxShadow: '0 6px 20px rgba(0,0,0,0.5)', touchAction: 'none' } : {};
 
     const frames = st.frames.map((f, i) => ({
       n: i + 1, title: 'Fase ' + (i + 1),
@@ -2427,6 +2674,9 @@ class Component extends DCLogic {
       secCfgOpen: st.secCfgOpen, toggleSecCfg: () => this.setState({ secCfgOpen: !st.secCfgOpen }), secCfgChevron: { transform: st.secCfgOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
       kitDesigns, cfgC1: cfg.c1, cfgC2: cfg.c2, setC1: e => this.setCfg({ c1: e.target.value }), setC2: e => this.setCfg({ c2: e.target.value }),
       pickLogo: this.pickLogo, clearLogo: () => this.setCfg({ logo: '' }), hasLogo: !!cfg.logo, noLogo: !cfg.logo, cfgLogo: cfg.logo,
+      cfgArun: cfg.arun, cfgApass: cfg.apass, cfgAdrib: cfg.adrib,
+      setArun: e => this.setCfg({ arun: e.target.value }), setApass: e => this.setCfg({ apass: e.target.value }), setAdrib: e => this.setCfg({ adrib: e.target.value }),
+      resetArrowCfg: () => this.setCfg({ arun: '#ffffff', apass: '#ffd166', adrib: '#7dd3fc' }),
       resetCfg: () => this.setCfg({ design: 'stripes', c1: '#e30613', c2: '#f4f4f4' }),
       logoBoxStyle: 'width:44px; height:44px; border-radius:12px; background:' + (cfg.logo ? 'transparent' : accent) + '; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden',
       secFleOpen: st.secFleOpen, toggleSecFle: () => this.setState({ secFleOpen: !st.secFleOpen }), secFleChevron: { transform: st.secFleOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
@@ -2451,6 +2701,12 @@ class Component extends DCLogic {
       confirmSaveLocal: this.confirmSaveLocal,
       confirmSaveDownload: this.confirmSaveDownload,
       stopClick: e => e.stopPropagation(),
+      // Cierra el modal solo si el clic empezó Y terminó en el fondo (arrastrar para seleccionar texto no debe cerrarlo)
+      ovDown: e => { this.ovd = e.target === e.currentTarget; },
+      ovNew: e => { if (this.ovd && e.target === e.currentTarget) this.setState({ newModalOpen: false }); this.ovd = false; },
+      ovRename: e => { if (this.ovd && e.target === e.currentTarget) this.closeRename(); this.ovd = false; },
+      ovSave: e => { if (this.ovd && e.target === e.currentTarget) this.closeSaveModal(); this.ovd = false; },
+      ovExport: e => { if (this.ovd && e.target === e.currentTarget) this.closeExportModal(); this.ovd = false; },
       asstOpen: st.asstOpen,
       asstDraft: st.asstDraft,
       toggleAsst: () => { if (st.asstOpen && this.micOn) { this.micOn = false; if (this.rec) this.rec.stop(); } this.setState({ asstOpen: !st.asstOpen, sel: null }); },
@@ -2530,6 +2786,9 @@ class Component extends DCLogic {
         curId: null, frames: [{ items: [], arrows: [] }], cf: 0, sel: null, playing: false, anim: null, newModalOpen: false
       }),
       exportAll: this.openExportModal,
+      linkFile: this.linkFile, unlinkFile: this.unlinkFile,
+      fileLinked: !!st.fileName, fileNotLinked: !st.fileName, fileNeedsPerm: st.fileNeedsPerm,
+      fileLabel: st.fileName ? ('Guardando en: ' + st.fileName + (st.fileNeedsPerm ? ' (pulsa para reconectar)' : '')) : '',
       importAll: this.importAll,
       exportModalOpen: st.exportModalOpen,
       exportNameDraft: st.exportNameDraft,
@@ -2563,8 +2822,15 @@ class Component extends DCLogic {
       counterLabel: v.items.length + ' ELEMENTOS · ' + st.frames.length + ' FASES',
       hint: st.playing ? 'REPRODUCIENDO…'
         : (st.msel.length + st.masel.length) ? (st.msel.length + st.masel.length) + ' SELECCIONADOS · ARRASTRA PARA MOVER EL GRUPO · SUPR PARA BORRAR · ESC PARA QUITAR'
-        : st.sel ? 'SELECCIONADO · ESQUINAS = ESCALAR, LADOS = ANCHO/ALTO · − / + O TECLAS + Y − · SUPR PARA BORRAR'
-        : 'HERRAMIENTA: ' + toolName + ' · CLIC PARA COLOCAR · SIN HERRAMIENTA, ARRASTRA SOBRE EL CAMPO PARA SELECCIONAR VARIOS (MAYÚS = AÑADIR) · DOBLE CLIC PARA BORRAR',
+        : '',
+      markers, ahandles, hasArrowBar: !!aS, arrowBarStyle, arrowColors, arrowBtn: abBtn, arrowColorValue: /^#[0-9a-f]{6}$/i.test(curCol) ? curCol : '#ffffff',
+      stopEv: e => e.stopPropagation(),
+      arrowCustom: e => this.arrowEdit(selA, () => ({ ucol: e.target.value })),
+      arrowRotL: () => this.arrowTransform(selA, -15, 1), arrowRotR: () => this.arrowTransform(selA, 15, 1),
+      arrowSmaller: () => this.arrowTransform(selA, 0, 0.88), arrowBigger: () => this.arrowTransform(selA, 0, 1.14),
+      arrowThinner: () => this.arrowEdit(selA, a => ({ sw: Math.max(1.5, (a.sw || 3.5) - 1) })),
+      arrowThicker: () => this.arrowEdit(selA, a => ({ sw: Math.min(10, (a.sw || 3.5) + 1) })),
+      arrowDel: () => { this.mutate(f => { f.arrows = f.arrows.filter((a, i) => i !== selA); }); this.setState({ masel: [] }); },
       pitches, playersColor, playersAthletic, cones, material, strokes, items, arrows, frames,
       addAllColor: addAllTeam('color', 'left'),
       addAllAthletic: addAllTeam('athletic', 'right'),

@@ -506,6 +506,9 @@
           <input type="color" value="{{ cfgC2 }}" sc-camel-on-change="{{ setC2 }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
         </label>
       </div>
+      <label style="display:flex; flexDirection:column; gap:5px; fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6">COLOR DEL ARO
+        <input type="color" value="{{ cfgRing }}" sc-camel-on-change="{{ setRing }}" style="width:100%; height:34px; border:1px solid #23262d; borderRadius:8px; background:#14171c; padding:2px; cursor:pointer">
+      </label>
       <div style="fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6; marginTop:4px">COLOR DE LAS FLECHAS</div>
       <div style="display:grid; gridTemplateColumns:1fr 1fr 1fr; gap:9px">
         <label style="display:flex; flexDirection:column; gap:5px; fontSize:9px; fontWeight:800; letterSpacing:0.1em; color:#8b95a6">CARRERA
@@ -546,11 +549,10 @@
       </div>
       <div style="display:flex; flexDirection:column; gap:3px; minWidth:180px; flex:1 1 260px">
         <div style="fontSize:9px; fontWeight:800; letterSpacing:0.28em; color:#6b7482; whiteSpace:nowrap">DISEÑADOR DE TAREAS</div>
-        <div style="color:#fff; fontSize:26px; fontWeight:900; letterSpacing:-0.01em; textTransform:uppercase; lineHeight:1.1; whiteSpace:nowrap">AC CENTER</div>
+        <div style="color:#fff; fontSize:26px; fontWeight:900; letterSpacing:-0.01em; textTransform:uppercase; lineHeight:1.1; whiteSpace:nowrap">AC FOOTBALL CENTER</div>
       </div>
       <button sc-camel-on-click="{{ saveExercise }}" style="padding:11px 18px; borderRadius:10px; border:none; background:#2563eb; color:#fff; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; flexShrink:0; whiteSpace:nowrap" style-hover="background:#1d4ed8">GUARDAR</button>
       <div style="marginLeft:auto; display:flex; alignItems:center; flexWrap:wrap; gap:10px; flexShrink:1; minWidth:0">
-        <div style="fontSize:10px; fontWeight:800; letterSpacing:0.14em; color:#6b7482; whiteSpace:nowrap; flexShrink:0">{{ counterLabel }}</div>
         <div style="position:relative; flexShrink:0">
           <button sc-camel-on-click="{{ toggleSaved }}" style="padding:11px 18px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; whiteSpace:nowrap" style-hover="background:#1c2027">MIS EJERCICIOS</button>
           <sc-if value="{{ savedOpen }}" hint-placeholder-val="{{ false }}">
@@ -596,6 +598,9 @@
                   IMPORTAR
                   <input type="file" accept="application/json" sc-camel-on-change="{{ importAll }}" style="display:none">
                 </label>
+              </div>
+              <div style="padding:4px 6px 4px">
+                <button sc-camel-on-click="{{ toggleSaved }}" style="width:100%; padding:8px; borderRadius:7px; border:1px solid #23262d; background:none; color:#8b95a6; fontSize:10px; fontWeight:800; letterSpacing:0.12em; cursor:pointer" style-hover="color:#e7ebf1">CERRAR</button>
               </div>
             </div>
           </sc-if>
@@ -1006,7 +1011,7 @@ class Component extends DCLogic {
   }
 
   loadCfg() {
-    const d = { design: 'stripes', c1: '#e30613', c2: '#f4f4f4', logo: '', arun: '#ffffff', apass: '#ffd166', adrib: '#7dd3fc' };
+    const d = { design: 'stripes', c1: '#e30613', c2: '#f4f4f4', logo: '', ring: '#7f1d1d', arun: '#ffffff', apass: '#ffd166', adrib: '#7dd3fc' };
     try {
       const c = JSON.parse(localStorage.getItem('tactics-config') || '{}');
       return this.cleanCfg(Object.assign({}, d, c));
@@ -1018,6 +1023,7 @@ class Component extends DCLogic {
       design: designs.indexOf(c.design) >= 0 ? c.design : 'stripes',
       c1: hex.test(c.c1) ? c.c1 : '#e30613',
       c2: hex.test(c.c2) ? c.c2 : '#f4f4f4',
+      ring: hex.test(c.ring) ? c.ring : '#7f1d1d',
       arun: hex.test(c.arun) ? c.arun : '#ffffff',
       apass: hex.test(c.apass) ? c.apass : '#ffd166',
       adrib: hex.test(c.adrib) ? c.adrib : '#7dd3fc',
@@ -1454,7 +1460,8 @@ class Component extends DCLogic {
     canvas.width = w; canvas.height = h;
     const ctx = canvas.getContext('2d');
     const MR = window.MediaRecorder;
-    const cands = ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1.42E01E', 'video/mp4', 'video/webm;codecs=vp9', 'video/webm'];
+    // Se graba en WebM (estable en el navegador) y se convierte a MP4 con ffmpeg en el servidor local.
+    const cands = ['video/webm;codecs=vp9', 'video/webm'];
     const mime = MR ? (cands.find(m => MR.isTypeSupported(m)) || '') : '';
     if (!mime) { alert('Este navegador no permite grabar vídeo.'); return; }
     this.setState({ recording: true });
@@ -1483,14 +1490,22 @@ class Component extends DCLogic {
     await new Promise(r => setTimeout(r, 200));
     rec.stop();
     await stopped;
-    this.setState({ recording: false });
     const blob = new Blob(chunks, { type: mime.split(';')[0] });
-    if (!blob.size) { alert('No se pudo generar el vídeo.'); return; }
-    const ext = mime.indexOf('mp4') >= 0 ? 'mp4' : 'webm';
+    if (!blob.size) { this.setState({ recording: false }); alert('No se pudo generar el vídeo (la grabación ha salido vacía).'); return; }
+    const base = (this.state.title || 'ejercicio');
+    let out = blob, ext = 'webm';
+    try {
+      const r = await fetch('/api/convertir-video', { method: 'POST', headers: { 'Content-Type': 'video/webm' }, body: blob });
+      if (r.ok) { out = await r.blob(); ext = 'mp4'; }
+      else { const j = await r.json().catch(() => ({})); console.error(j.error || r.status); }
+    } catch (e) { console.error(e); }
+    this.setState({ recording: false });
+    if (ext === 'webm') alert('No se pudo convertir a MP4 (¿está ffmpeg instalado y el servidor en marcha?). Se descarga el vídeo en WebM.');
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = (this.state.title || 'ejercicio') + '.' + ext;
+    a.href = URL.createObjectURL(out);
+    a.download = base + '.' + ext;
     a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
   };
   beginResize(e, it, axis, kx, ky) {
     e.stopPropagation();
@@ -2471,10 +2486,10 @@ class Component extends DCLogic {
     const kitBg = (n, kit) => gk(n, kit) ? '#2563eb' : kit === 'athletic' ? kitDesignBg(cfg.design, cfg.c1, cfg.c2) : PC[n - 1];
     const kitText = (n, kit) => gk(n, kit) ? '#fff' : kit === 'athletic' ? (kitDark ? '#fff' : '#0f172a') : '#fff';
     const kitShadow = (n, kit) => gk(n, kit) ? 'none' : kit === 'athletic' ? (kitDark ? '0 1px 0 rgba(0,0,0,0.75)' : '0 1px 0 rgba(255,255,255,0.75)') : 'none';
-    const kitBorder = (n, kit) => gk(n, kit) ? '#1e3a8a' : kit === 'athletic' ? '#7f1d1d' : 'rgba(255,255,255,0.75)';
+    const kitBorder = (n, kit) => gk(n, kit) ? '#1e3a8a' : kit === 'athletic' ? cfg.ring : 'rgba(255,255,255,0.75)';
     const kitDesigns = [['stripes', 'RAYAS'], ['hstripes', 'HORIZ.'], ['halves', 'MITADES'], ['solid', 'LISO'], ['diag', 'BANDA']].map(([k, label]) => ({
       label, pick: () => this.setCfg({ design: k }),
-      preview: 'width:34px; height:34px; border-radius:50%; border:2px solid #7f1d1d; background:' + kitDesignBg(k, cfg.c1, cfg.c2),
+      preview: 'width:34px; height:34px; border-radius:50%; border:2px solid ' + cfg.ring + '; background:' + kitDesignBg(k, cfg.c1, cfg.c2),
       style: 'display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px 4px; border-radius:12px; cursor:pointer; ' + (cfg.design === k ? 'background:' + accent + '; color:#fff; border:2px solid #fff;' : 'background:#14171c; color:#e7ebf1; border:1px solid #23262d;')
     }));
 
@@ -2723,12 +2738,12 @@ class Component extends DCLogic {
       secConOpen: st.secConOpen, toggleSecCon: () => this.setState({ secConOpen: !st.secConOpen }), secConChevron: { transform: st.secConOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
       secMatOpen: st.secMatOpen, toggleSecMat: () => this.setState({ secMatOpen: !st.secMatOpen }), secMatChevron: { transform: st.secMatOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
       secCfgOpen: st.secCfgOpen, toggleSecCfg: () => this.setState({ secCfgOpen: !st.secCfgOpen }), secCfgChevron: { transform: st.secCfgOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
-      kitDesigns, cfgC1: cfg.c1, cfgC2: cfg.c2, setC1: e => this.setCfg({ c1: e.target.value }), setC2: e => this.setCfg({ c2: e.target.value }),
+      kitDesigns, cfgC1: cfg.c1, cfgC2: cfg.c2, setC1: e => this.setCfg({ c1: e.target.value }), setC2: e => this.setCfg({ c2: e.target.value }), cfgRing: cfg.ring, setRing: e => this.setCfg({ ring: e.target.value }),
       pickLogo: this.pickLogo, clearLogo: () => this.setCfg({ logo: '' }), hasLogo: !!cfg.logo, noLogo: !cfg.logo, cfgLogo: cfg.logo,
       cfgArun: cfg.arun, cfgApass: cfg.apass, cfgAdrib: cfg.adrib,
       setArun: e => this.setCfg({ arun: e.target.value }), setApass: e => this.setCfg({ apass: e.target.value }), setAdrib: e => this.setCfg({ adrib: e.target.value }),
       resetArrowCfg: () => this.setCfg({ arun: '#ffffff', apass: '#ffd166', adrib: '#7dd3fc' }),
-      resetCfg: () => this.setCfg({ design: 'stripes', c1: '#e30613', c2: '#f4f4f4' }),
+      resetCfg: () => this.setCfg({ design: 'stripes', c1: '#e30613', c2: '#f4f4f4', ring: '#7f1d1d' }),
       logoBoxStyle: 'width:44px; height:44px; border-radius:12px; background:' + (cfg.logo ? 'transparent' : accent) + '; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden',
       secFleOpen: st.secFleOpen, toggleSecFle: () => this.setState({ secFleOpen: !st.secFleOpen }), secFleChevron: { transform: st.secFleOpen ? 'rotate(0deg)' : 'rotate(-90deg)' },
       savedOpen: st.savedOpen,

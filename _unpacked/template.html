@@ -265,6 +265,7 @@
 
     <div style="display:flex; flexDirection:column; gap:12px">
       <div style="fontSize:10px; fontWeight:800; letterSpacing:0.18em; color:#8b95a6">MATERIAL</div>
+      <button sc-camel-on-click="{{ noTool.pick }}" style="{{ noTool.style }}">SIN SELECCIÓN</button>
       <div style="display:grid; gridTemplateColumns:repeat(2, 1fr); gap:9px">
         <sc-for list="{{ material }}" as="m" hint-placeholder-count="6">
           <button sc-camel-on-click="{{ m.pick }}" style="{{ m.style }}">
@@ -421,6 +422,7 @@
                 <span style="{{ it.orientWrap }}"><span sc-camel-on-pointer-down="{{ it.startRotate }}" title="Arrastra para girar la orientación" style="{{ it.orientHalf }}"></span></span>
               </sc-if>
             </sc-if>
+            <span style="{{ it.shapeWrap }}">
             <sc-if value="{{ it.isCone }}" hint-placeholder-val="{{ false }}">
               <span style="{{ it.tri }}"></span>
             </sc-if>
@@ -443,7 +445,10 @@
               <span style="width:100%; height:100%; border:0.3cqw dashed rgba(240,52,60,0.9); background:rgba(240,52,60,0.16); borderRadius:0.4cqw"></span>
             </sc-if>
             <sc-if value="{{ it.isPole }}" hint-placeholder-val="{{ false }}">
-              <span style="width:100%; height:100%; background:linear-gradient(180deg,#facc15,#eab308); borderRadius:0.6cqw; boxShadow:0 0.2cqw 0.5cqw rgba(0,0,0,0.4)"></span>
+              <span style="display:block; position:relative; width:100%; height:100%">
+                <span style="position:absolute; left:50%; top:0; bottom:8%; width:16%; transform:translateX(-50%); background:#ffd60a; borderRadius:999px"></span>
+                <span style="position:absolute; left:0; right:0; bottom:0; height:26%; background:#ffe45c; border:0.45cqw solid #ffd60a; borderRadius:50%; boxSizing:border-box"></span>
+              </span>
             </sc-if>
             <sc-if value="{{ it.isRing }}" hint-placeholder-val="{{ false }}">
               <span style="width:100%; height:100%; borderRadius:50%; border:0.55cqw solid #f97316; boxSizing:border-box; boxShadow:0 0.2cqw 0.5cqw rgba(0,0,0,0.4)"></span>
@@ -457,6 +462,7 @@
             <sc-if value="{{ it.isTallHurdle }}" hint-placeholder-val="{{ false }}">
               <span style="width:100%; height:100%; borderTop:0.5cqw solid #facc15; borderLeft:0.35cqw solid #facc15; borderRight:0.35cqw solid #facc15; borderRadius:0.3cqw 0.3cqw 0 0; boxSizing:border-box"></span>
             </sc-if>
+            </span>
             <sc-if value="{{ it.isSel }}" hint-placeholder-val="{{ false }}">
               <div sc-camel-on-pointer-down="{{ it.startResize }}" title="Arrastra para redimensionar" style="{{ it.hTL }}"></div>
               <div sc-camel-on-pointer-down="{{ it.startResize }}" title="Arrastra para redimensionar" style="{{ it.hTR }}"></div>
@@ -481,8 +487,11 @@
                 </button>
                 <span style="width:1px; height:26px; background:#2c323b; margin:0 2px"></span>
                 <button sc-camel-on-click="{{ it.duplicateIt }}" title="Duplicar" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer" style-hover="background:#2c323b">
-                  <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><rect x="8" y="8" width="20" height="20" rx="2"></rect><path d="M4 16V6a2 2 0 0 1 2-2h10"></path></svg>
+                  <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
+                  <button sc-camel-on-click="{{ it.rotateBtn }}" title="Girar 45°" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer" style-hover="background:#2c323b">
+                    <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.5-5.8"></path><path d="M20 4v5h-5"></path></svg>
+                  </button>
                 <span style="width:1px; height:26px; background:#2c323b; margin:0 2px"></span>
                 <button sc-camel-on-click="{{ it.sendBack }}" title="Enviar al fondo" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer" style-hover="background:#2c323b">
                   <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><path d="M12 20V10M7 15l5 5 5-5M5 4h14"></path></svg>
@@ -521,7 +530,7 @@ const MAT = [
 ];
 const SIZES = {
   player: [3.8, 3.8], cone: [3.2, 3.2], flat: [3, 1.2], ball: [2.3, 2.3],
-  ladder: [13, 4.4], hurdle: [5, 3], goal: [11, 3.4], zone: [15, 11], pole: [1.3, 6],
+  ladder: [13, 4.4], hurdle: [5, 3], goal: [11, 3.4], zone: [15, 11], pole: [3.6, 6],
   ring: [3.4, 3.4], mannequin: [2.4, 6], minigoal: [6, 2.6], tallhurdle: [5, 4.6]
 };
 const PITCHES = {
@@ -891,10 +900,11 @@ class Component extends DCLogic {
       pick: () => this.setState({ pitch: k })
     }));
 
-    const kitBg = (n, kit) => kit === 'athletic' ? 'repeating-linear-gradient(90deg,#e30613 0 24%,#f4f4f4 24% 48%)' : PC[n - 1];
-    const kitText = kit => kit === 'athletic' ? '#0f172a' : '#fff';
-    const kitShadow = kit => kit === 'athletic' ? '0 1px 0 rgba(255,255,255,0.75)' : 'none';
-    const kitBorder = kit => kit === 'athletic' ? '#7f1d1d' : 'rgba(255,255,255,0.75)';
+    const gk = (n, kit) => kit === 'athletic' && n === 1;
+    const kitBg = (n, kit) => gk(n, kit) ? '#2563eb' : kit === 'athletic' ? 'repeating-linear-gradient(90deg,#e30613 0 24%,#f4f4f4 24% 48%)' : PC[n - 1];
+    const kitText = (n, kit) => gk(n, kit) ? '#fff' : kit === 'athletic' ? '#0f172a' : '#fff';
+    const kitShadow = (n, kit) => gk(n, kit) ? 'none' : kit === 'athletic' ? '0 1px 0 rgba(255,255,255,0.75)' : 'none';
+    const kitBorder = (n, kit) => gk(n, kit) ? '#1e3a8a' : kit === 'athletic' ? '#7f1d1d' : 'rgba(255,255,255,0.75)';
 
     const usedId = (n, kit) => this.cur().items.some(i => i.id === 'p-' + kit + '-' + n);
     const makePlayers = kit => Array.from({ length: 11 }, (_, i) => {
@@ -902,7 +912,7 @@ class Component extends DCLogic {
       return {
         num: n, title: u ? 'Jugador ' + n + ' (en campo)' : 'Colocar jugador ' + n,
         pick: () => this.setState({ tool: { kind: 'player', num: n, kit: kit } }),
-        style: 'width:100%; aspect-ratio:1; border-radius:50%; background:' + kitBg(n, kit) + '; color:' + kitText(kit) + '; text-shadow:' + kitShadow(kit) + '; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:' + (u ? 0.3 : 1) + '; border:' + (on ? '3px solid #0b0d10' : '2px solid ' + kitBorder(kit)) + '; box-shadow:0 2px 6px rgba(15,23,42,0.25)'
+        style: 'width:100%; aspect-ratio:1; border-radius:50%; background:' + kitBg(n, kit) + '; color:' + kitText(n, kit) + '; text-shadow:' + kitShadow(n, kit) + '; font-size:13px; font-weight:900; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:' + (u ? 0.3 : 1) + '; border:' + (on ? '3px solid #0b0d10' : '2px solid ' + kitBorder(n, kit)) + '; box-shadow:0 2px 6px rgba(15,23,42,0.25)'
       };
     });
     const playersColor = makePlayers('color');
@@ -951,10 +961,11 @@ class Component extends DCLogic {
       return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 24 24', fill: 'none', stroke: c, strokeWidth: 2, strokeLinecap: 'round' },
         React.createElement('path', { d: g[k] }));
     };
+    const noTool = { pick: () => this.setState({ tool: null }), style: btn(!tool, 'justify-content:center; padding:12px 16px;') };
     const material = MAT.map(m => ({
       label: m.label, icon: matIcon(m.k),
       pick: () => this.setState({ tool: { kind: m.k } }),
-      style: 'display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 8px; border-radius:12px; cursor:pointer; color:#e7ebf1; background:#14171c; border:' + (tool && tool.kind === m.k ? '2px solid ' + accent : '1px solid #23262d')
+      style: 'display:flex; flex-direction:column; align-items:center; gap:8px; padding:16px 8px; border-radius:12px; cursor:pointer; ' + (tool && tool.kind === m.k ? 'color:#fff; background:' + accent + '; border:2px solid #fff; box-shadow:0 4px 14px rgba(227,6,19,0.35)' : 'color:#e7ebf1; background:#14171c; border:1px solid #23262d')
     }));
 
     const strokeDefs = [
@@ -1000,6 +1011,7 @@ class Component extends DCLogic {
         isUnlocked: !it.locked,
         lockLabel: it.locked ? 'Desbloquear' : 'Bloquear posición',
         toggleLock: e => { e.stopPropagation(); this.mutate(f => { const t = f.items.find(x => x.id === it.id); if (t) t.locked = !t.locked; }); },
+        rotateBtn: e => { e.stopPropagation(); if (it.locked) return; if (it.kind === 'player') this.setState({ orient: true }); this.mutate(f => { const t = f.items.find(x => x.id === it.id); if (t) t.dir = (((t.dir || 0) + 45) % 360 + 360) % 360; }); },
         duplicateIt: e => { e.stopPropagation(); this.duplicate(it); },
         sendBack: e => { e.stopPropagation(); this.reorder(it.id, 'back'); },
         sendBackward: e => { e.stopPropagation(); this.reorder(it.id, -1); },
@@ -1022,10 +1034,11 @@ class Component extends DCLogic {
         isGoal: it.kind === 'goal', isZone: it.kind === 'zone', isPole: it.kind === 'pole', isRing: it.kind === 'ring', isMannequin: it.kind === 'mannequin', isMinigoal: it.kind === 'minigoal', isTallHurdle: it.kind === 'tallhurdle',
         label: st.dorsales && it.kind === 'player' ? String(it.num) : '',
         showOrient: st.orient && it.kind === 'player',
-        orientWrap: { position: 'absolute', inset: 0, pointerEvents: 'none', transform: 'rotate(' + (it.dir || 0) + 'deg)' },
-        orientHalf: { position: 'absolute', left: '18%', width: '64%', top: '-34%', height: '34%', boxSizing: 'border-box', borderRadius: '999px 999px 0 0', background: '#fff', border: '0.2cqw solid #111827', borderBottom: 'none', pointerEvents: st.playing ? 'none' : 'auto', cursor: 'crosshair', touchAction: 'none' },
+        shapeWrap: { display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', transform: 'rotate(' + (it.kind === 'player' ? 0 : (it.dir || 0)) + 'deg)' },
+        orientWrap: { position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', transform: 'rotate(' + (it.dir || 0) + 'deg)' },
+        orientHalf: { position: 'absolute', left: '18%', width: '64%', top: '-30%', height: '42%', boxSizing: 'border-box', borderRadius: '50% 50% 0 0 / 100% 100% 0 0', background: '#fff', border: '0.3cqw solid #111827', pointerEvents: st.playing ? 'none' : 'auto', cursor: 'crosshair', touchAction: 'none' },
         startRotate: e => { if (st.playing || it.locked) return; e.stopPropagation(); this.push(); this.rot = { id: it.id, x: it.x, y: it.y }; this.setState({ sel: it.id }); },
-        chip: { width: '100%', height: '100%', borderRadius: '50%', background: kitBg(it.num || 1, it.kit), color: kitText(it.kit), textShadow: kitShadow(it.kit), fontSize: (1.6 * k).toFixed(2) + 'cqw', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '0.22cqw solid ' + kitBorder(it.kit), boxShadow: '0 0.25cqw 0.6cqw rgba(0,0,0,0.45)' },
+        chip: { position: 'relative', zIndex: 1, width: '100%', height: '100%', borderRadius: '50%', background: kitBg(it.num || 1, it.kit), color: kitText(it.num || 1, it.kit), textShadow: kitShadow(it.num || 1, it.kit), fontSize: (1.6 * k).toFixed(2) + 'cqw', fontWeight: 900, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '0.22cqw solid ' + kitBorder(it.num || 1, it.kit), boxShadow: '0 0.25cqw 0.6cqw rgba(0,0,0,0.45)' },
         tri: { width: 0, height: 0, borderLeft: sz[0] / 2 + 'cqw solid transparent', borderRight: sz[0] / 2 + 'cqw solid transparent', borderBottom: sz[1] + 'cqw solid ' + (it.color || '#ef4444'), filter: 'drop-shadow(0 0.2cqw 0.3cqw rgba(0,0,0,0.5))' },
         flat: { width: '100%', height: '100%', borderRadius: '50%', background: it.color || '#e5e7eb', opacity: 0.9 },
         box: {
@@ -1099,7 +1112,7 @@ class Component extends DCLogic {
       hint: st.playing ? 'REPRODUCIENDO…'
         : st.sel ? 'SELECCIONADO · ESQUINAS = ESCALAR, LADOS = ANCHO/ALTO · − / + O TECLAS + Y − · SUPR PARA BORRAR'
         : 'HERRAMIENTA: ' + toolName + ' · CLIC PARA COLOCAR, ARRASTRA PARA MOVER O SELECCIONAR, DOBLE CLIC PARA BORRAR',
-      pitches, playersColor, playersAthletic, cones, material, strokes, items, arrows, frames,
+      noTool, pitches, playersColor, playersAthletic, cones, material, strokes, items, arrows, frames,
       addAllColor: addAllTeam('color', 'left'),
       addAllAthletic: addAllTeam('athletic', 'right'),
       dorsalLabel: st.dorsales ? '# DORSALES ON' : '# DORSALES OFF',

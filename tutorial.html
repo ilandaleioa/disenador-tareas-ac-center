@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tutorial · Diseñador de ejercicios AC Center</title>
+  <style>
+    :root { --bg:#f7f7f5; --card:#ffffff; --text:#1d1f23; --muted:#5b616b; --accent:#e30613; --line:#e3e5e8; --note:#fff6e5; --note-line:#f0b429; }
+    :root:not([data-theme="light"]) { }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --bg:#0e1013; --card:#171a1f; --text:#e7ebf1; --muted:#9aa4b2; --line:#2a2f37; --note:#2b2413; --note-line:#c99a1a; }
+    }
+    :root[data-theme="dark"] { --bg:#0e1013; --card:#171a1f; --text:#e7ebf1; --muted:#9aa4b2; --line:#2a2f37; --note:#2b2413; --note-line:#c99a1a; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height:1.55; }
+    main { max-width: 760px; margin: 0 auto; padding: 32px 16px 56px; }
+    header { border-bottom: 3px solid var(--accent); padding-bottom: 14px; margin-bottom: 24px; }
+    header small { color: var(--muted); letter-spacing: .14em; font-weight: 700; font-size: 12px; text-transform: uppercase; }
+    h1 { margin: 6px 0 0; font-size: 28px; }
+    h2 { font-size: 20px; margin: 32px 0 10px; }
+    p, li { font-size: 16px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px 18px 10px; margin: 14px 0; }
+    .step { display: flex; gap: 14px; align-items: flex-start; margin: 12px 0; }
+    .num { flex: 0 0 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .note { background: var(--note); border-left: 4px solid var(--note-line); border-radius: 8px; padding: 12px 14px; margin: 14px 0; }
+    .btn { display: inline-block; background: #1c2a4a; color: #fff; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 14px; white-space: nowrap; }
+    code { background: var(--line); padding: 1px 6px; border-radius: 4px; font-size: 14px; word-break: break-all; }
+    .url { display:block; margin: 10px 0; padding: 12px; background: var(--card); border:1px solid var(--line); border-radius: 8px; font-size: 15px; word-break: break-all; }
+    @media (max-width: 520px) { h1 { font-size: 24px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <small>AC Center · Guía para alumnos</small>
+    <h1>Cómo usar el diseñador de ejercicios</h1>
+  </header>
+
+  <p>Con este diseñador puedes crear ejercicios de campo y guardarlos en tu propio ordenador. No necesitas instalar nada: basta con un navegador.</p>
+
+  <div class="card">
+    <strong>Antes de empezar</strong>
+    <ul>
+      <li>Usa <strong>Google Chrome</strong> o <strong>Microsoft Edge</strong>. Otros navegadores no permiten guardar en archivo.</li>
+      <li>Usa siempre el mismo navegador y el mismo perfil.</li>
+    </ul>
+  </div>
+
+  <h2>Dirección de la aplicación</h2>
+  <code class="url">https://ilandaleioa.github.io/disenador-tareas-ac-center/</code>
+
+  <h2>Pasos</h2>
+
+  <div class="step"><div class="num">1</div><div>Abre la dirección de arriba en Chrome o Edge.</div></div>
+
+  <div class="step"><div class="num">2</div><div>Crea una carpeta en tu ordenador, por ejemplo <code>Mis ejercicios AC Center</code>. Ahí guardarás tu archivo.</div></div>
+
+  <div class="step"><div class="num">3</div><div>Pulsa <span class="btn">MIS EJERCICIOS</span> y después <span class="btn">VINCULAR ARCHIVO .JSON</span>.</div></div>
+
+  <div class="step"><div class="num">4</div><div>Elige o crea un archivo dentro de tu carpeta, por ejemplo <code>ejercicios-tunombre.json</code>. Si el navegador pide permiso para leer y escribir, acéptalo.</div></div>
+
+  <div class="step"><div class="num">5</div><div>Diseña tu ejercicio colocando jugadores, conos, porterías y flechas. Ponle un nombre y pulsa <span class="btn">GUARDAR</span>. El ejercicio aparecerá en <span class="btn">MIS EJERCICIOS</span>.</div></div>
+
+  <div class="step"><div class="num">6</div><div>Para volver otro día, abre la misma dirección y pulsa <span class="btn">VINCULAR ARCHIVO .JSON</span> otra vez. Elige el mismo archivo.</div></div>
+
+  <h2>Cosas que debes saber</h2>
+
+  <div class="note">
+    <strong>El panel ASISTENTE no funciona en esta web.</strong> Necesita un servidor que no está publicado. Puedes ignorarlo.
+  </div>
+
+  <div class="note">
+    <strong>Tus ejercicios se quedan en tu ordenador.</strong> La web no los sube a ningún sitio. Por eso, si borras los datos del navegador, perderás lo que solo estaba guardado ahí. Conserva siempre tu archivo JSON.
+  </div>
+
+  <div class="note">
+    <strong>Haz copias de seguridad.</strong> Copia tu archivo JSON a otra carpeta o a un pendrive de vez en cuando.
+  </div>
+
+  <h2>Si algo no funciona</h2>
+  <ul>
+    <li>No aparece el botón <span class="btn">VINCULAR ARCHIVO .JSON</span>: revisa que usas Chrome o Edge.</li>
+    <li>El navegador no deja guardar: comprueba que aceptaste el permiso de lectura y escritura.</li>
+    <li>Tus ejercicios no aparecen: vuelve a vincular el archivo JSON.</li>
+  </ul>
+</main>
+</body>
+</html>

@@ -1,4 +1,5 @@
 .env
 __pycache__/
 *.pyc
-datos/
+ac-center-ejercicios.json
+ac-center-ejercicios.tmp

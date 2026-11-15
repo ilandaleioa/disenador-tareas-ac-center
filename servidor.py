@@ -21,7 +21,10 @@ conocidos. Al modelo solo se envían posiciones y tipos de elementos genéricos
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import threading
 import time
 from collections import deque
@@ -271,7 +274,7 @@ def rate_ok():
         return True
 
 
-DATA_FILE = ROOT / "datos" / "ac-center-ejercicios.json"   # tareas, consignas y escudo
+DATA_FILE = ROOT / "ac-center-ejercicios.json"   # tareas, consignas y escudo
 MAX_DATA = 5_000_000       # bytes (incluye el escudo en base64)
 MAX_TASKS = 2000
 MAX_REQS = 200
@@ -307,6 +310,38 @@ def write_datos(obj):
     tmp = DATA_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
     os.replace(tmp, DATA_FILE)
+
+
+# ---------------------------------------------------------------- vídeo (WebM -> MP4)
+MAX_VIDEO = 200_000_000    # bytes de la grabación WebM
+FFMPEG_TIMEOUT = 300       # segundos
+
+
+def find_ffmpeg():
+    """Busca ffmpeg en FFMPEG (ruta opcional en .env) o en el PATH."""
+    exe = os.environ.get("FFMPEG") or shutil.which("ffmpeg")
+    return exe if exe and Path(exe).is_file() else None
+
+
+def webm_to_mp4(data):
+    """Convierte la grabación WebM del navegador en un MP4 H.264 reproducible en cualquier reproductor."""
+    exe = find_ffmpeg()
+    if not exe:
+        raise RuntimeError("ffmpeg no está instalado en este equipo (o no está en el PATH).")
+    with tempfile.TemporaryDirectory() as tmp:
+        src, dst = Path(tmp, "entrada.webm"), Path(tmp, "salida.mp4")
+        src.write_bytes(data)
+        cmd = [exe, "-hide_banner", "-loglevel", "error", "-y", "-i", str(src),
+               "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+               "-movflags", "+faststart", "-an", str(dst)]
+        try:
+            r = subprocess.run(cmd, capture_output=True, timeout=FFMPEG_TIMEOUT)
+        except subprocess.TimeoutExpired:
+            raise RuntimeError("La conversión a MP4 tardó demasiado.")
+        if r.returncode != 0 or not dst.is_file() or dst.stat().st_size == 0:
+            sys.stderr.write("ffmpeg terminó con código %s\n" % r.returncode)
+            raise RuntimeError("No se pudo convertir el vídeo a MP4.")
+        return dst.read_bytes()
 
 
 ALLOWED_HOSTS = {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
@@ -366,6 +401,25 @@ class Handler(BaseHTTPRequestHandler):
             except OSError:
                 return self._json(500, {"error": "No se pudo escribir el archivo de datos."})
             return self._json(200, {"ok": True})
+        if self.path.split("?", 1)[0] == "/api/convertir-video":
+            if self.headers.get("Content-Type", "").split(";")[0].strip() != "video/webm":
+                return self._json(415, {"error": "Se esperaba video/webm."})
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+            except ValueError:
+                length = -1
+            if length <= 0 or length > MAX_VIDEO:
+                return self._json(413, {"error": "Vídeo demasiado grande."})
+            if not rate_ok():
+                return self._json(429, {"error": "Demasiadas peticiones. Espera un momento."})
+            data = self.rfile.read(length)
+            try:
+                mp4 = webm_to_mp4(data)
+            except RuntimeError as e:
+                return self._json(503 if "ffmpeg" in str(e) else 500, {"error": str(e)})
+            except OSError:
+                return self._json(500, {"error": "No se pudo ejecutar ffmpeg."})
+            return self._send(200, mp4, "video/mp4")
         if self.path.split("?", 1)[0] != "/api/asistente":
             return self._json(404, {"error": "No encontrado."})
         if not (self.headers.get("Content-Type", "").split(";")[0].strip() == "application/json"):

@@ -6,6 +6,12 @@
       "runtimeExecutable": "C:\\Python314\\python.exe",
       "runtimeArgs": ["-m", "http.server", "8090", "--bind", "127.0.0.1"],
       "port": 8090
+    },
+    {
+      "name": "disenador-ia",
+      "runtimeExecutable": "C:\\Python314\\python.exe",
+      "runtimeArgs": ["servidor.py", "8091"],
+      "port": 8091
     }
   ]
 }

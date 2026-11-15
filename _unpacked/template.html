@@ -600,8 +600,8 @@
             </div>
           </sc-if>
         </div>
-        <button sc-camel-on-click="{{ toggleFullscreen }}" title="Pantalla completa" style="width:42px; height:42px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer; flexShrink:0" style-hover="background:#1c2027">
-          <svg width="17" height="17" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.3" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"></path></svg>
+        <button sc-camel-on-click="{{ toggleFullscreen }}" title="Pantalla completa" style="width:42px; height:42px; borderRadius:10px; border:1px solid #f5c542; background:#f5c542; color:#0b0d10; display:flex; alignItems:center; justifyContent:center; cursor:pointer; flexShrink:0; boxShadow:0 0 0 3px rgba(245,197,66,0.18), 0 4px 14px rgba(245,197,66,0.25)" style-hover="background:#ffd75e">
+          <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" sc-camel-stroke-width="2.3" sc-camel-stroke-linecap="round" sc-camel-stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"></path></svg>
         </button>
       </div>
     </header>
@@ -773,7 +773,7 @@
               </span>
             </sc-if>
             <sc-if value="{{ it.isRing }}" hint-placeholder-val="{{ false }}">
-              <span style="width:100%; height:100%; borderRadius:50%; border:0.55cqw solid #f97316; boxSizing:border-box; boxShadow:0 0.2cqw 0.5cqw rgba(0,0,0,0.4)"></span>
+              <span style="{{ it.ringStyle }}"></span>
             </sc-if>
             <sc-if value="{{ it.isText }}" hint-placeholder-val="{{ false }}">
               <span style="{{ it.textStyle }}">{{ it.textLabel }}</span>
@@ -809,7 +809,7 @@
               </button>
               </sc-if>
               <sc-if value="{{ it.barOpen }}" hint-placeholder-val="{{ false }}">
-              <div sc-camel-on-pointer-down="{{ it.stop }}" sc-camel-on-double-click="{{ it.stop }}" style="position:absolute; bottom:100%; left:50%; transform:translate(-50%,-14px); display:flex; flexWrap:wrap; justifyContent:center; alignItems:center; gap:6px; padding:6px; borderRadius:12px; background:rgba(11,13,16,0.92); border:1px solid #2c323b; boxShadow:0 6px 16px rgba(0,0,0,0.45); zIndex:200; whiteSpace:nowrap; width:600px">
+              <div sc-camel-on-pointer-down="{{ it.stop }}" sc-camel-on-double-click="{{ it.stop }}" style="{{ it.barPos }} display:flex; flexWrap:wrap; justifyContent:center; alignItems:center; gap:6px; padding:6px; borderRadius:12px; background:rgba(11,13,16,0.92); border:1px solid #2c323b; boxShadow:0 6px 16px rgba(0,0,0,0.45); zIndex:200; whiteSpace:nowrap; width:600px">
                 <div style="display:flex; alignItems:center; gap:4px; padding:4px; borderRadius:9px; background:rgba(96,165,250,0.10)"><button sc-camel-on-click="{{ it.smaller }}" title="Reducir" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; fontSize:22px; fontWeight:900; lineHeight:1; cursor:pointer" style-hover="background:#2c323b">−</button>
                 <span style="minWidth:52px; textAlign:center; fontSize:12px; fontWeight:800; letterSpacing:0.06em; color:#9aa4b2">{{ it.scaleLabel }}</span>
                 <button sc-camel-on-click="{{ it.bigger }}" title="Aumentar" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; fontSize:22px; fontWeight:900; lineHeight:1; cursor:pointer" style-hover="background:#2c323b">+</button>
@@ -817,7 +817,11 @@
                 <sc-for list="{{ it.sizes }}" as="z" hint-placeholder-count="4">
                   <button sc-camel-on-click="{{ z.on }}" title="{{ z.title }}" style="{{ z.style }}">{{ z.label }}</button>
                 </sc-for>
-                </div><div style="display:flex; alignItems:center; gap:4px; padding:4px; borderRadius:9px; background:rgba(240,52,60,0.10)">
+                </div><sc-if value="{{ it.isRing }}" hint-placeholder-val="{{ false }}"><div style="display:flex; alignItems:center; gap:4px; padding:4px; borderRadius:9px; background:rgba(249,115,22,0.10)">
+                <sc-for list="{{ it.ringColors }}" as="c" hint-placeholder-count="6">
+                  <button sc-camel-on-click="{{ c.on }}" title="{{ c.title }}" style="{{ c.style }}"></button>
+                </sc-for>
+                </div></sc-if><div style="display:flex; alignItems:center; gap:4px; padding:4px; borderRadius:9px; background:rgba(240,52,60,0.10)">
                 <button sc-camel-on-click="{{ it.toggleLock }}" title="{{ it.lockLabel }}" style="width:38px; height:38px; borderRadius:6px; border:none; background:#1c2027; color:#e7ebf1; display:flex; alignItems:center; justifyContent:center; cursor:pointer" style-hover="background:#2c323b">
                   <sc-if value="{{ it.isLocked }}" hint-placeholder-val="{{ false }}">
                     <svg width="20" height="20" sc-camel-view-box="0 0 24 24" fill="none" stroke="#f0343c" sc-camel-stroke-width="2.4" sc-camel-stroke-linecap="round"><rect x="5" y="11" width="14" height="9" rx="1.5"></rect><path d="M8 11V7a4 4 0 0 1 8 0v1"></path></svg>
@@ -879,11 +883,12 @@ const MAT = [
   { k: 'zone', label: 'ZONA' }, { k: 'pole', label: 'PICA' },
   { k: 'ring', label: 'AROS' }, { k: 'mannequin', label: 'MANIQUÍ' }
 ];
+const RING_COLORS = [{ v: '#f97316', n: 'Naranja' }, { v: '#ef4444', n: 'Rojo' }, { v: '#3b82f6', n: 'Azul' }, { v: '#facc15', n: 'Amarillo' }, { v: '#ffffff', n: 'Blanco' }, { v: '#22c55e', n: 'Verde' }, { v: '#111827', n: 'Negro' }];
 const SIZE_PRESETS = [{ k: 'S', v: 0.6 }, { k: 'M', v: 1 }, { k: 'L', v: 1.5 }, { k: 'XL', v: 2.2 }];
 const SIZES = {
   player: [3.8, 3.8], cone: [2.2, 2.2], flat: [2.1, 0.85], ball: [2.3, 2.3],
   ladder: [13, 4.4], hurdle: [3.5, 2.1], goal: [11, 3.4], zone: [33, 49], pole: [2.5, 4.2],
-  text: [20, 3.2], ring: [2.4, 2.4], mannequin: [1.7, 4.2], minigoal: [6, 2.6], tallhurdle: [3.5, 3.2]
+  text: [20, 3.2], ring: [3.6, 3.6], mannequin: [1.7, 4.2], minigoal: [6, 2.6], tallhurdle: [3.5, 3.2]
 };
 const PITCHES = {
   total: { label: 'CAMPO TOTAL', box: '0 0 1050 680', ratio: 1050 / 680 },
@@ -1023,7 +1028,7 @@ class Component extends DCLogic {
     const cfg = this.cleanCfg(Object.assign({}, this.state.cfg, patch));
     try { localStorage.setItem('tactics-config', JSON.stringify(cfg)); } catch (e) {}
     this.setState({ cfg: cfg });
-    if (patch && 'logo' in patch) this.syncFile({ escudo: cfg.logo });
+    if (patch && 'logo' in patch) { this.syncFile({ escudo: cfg.logo }); this.pushServer({ escudo: cfg.logo }); }
   }
   pickLogo = e => {
     const f = e.target.files && e.target.files[0];
@@ -1049,6 +1054,7 @@ class Component extends DCLogic {
     localStorage.setItem('tactics-exercises', JSON.stringify(list));
     this.setState({ saved: list });
     this.syncFile({ tareas: list });
+    this.pushServer({ tareas: list });
   }
   // ---- Archivo .json vinculado (File System Access API; el manejador se guarda en IndexedDB) ----
   fsOk() { return typeof window.showOpenFilePicker === 'function'; }
@@ -1264,9 +1270,42 @@ class Component extends DCLogic {
     reader.readAsText(file);
     e.target.value = '';
   };
+  // ---- Modo servidor local (servidor.py): tareas, consignas y escudo en datos/ac-center-ejercicios.json ----
+  // En la web publicada no existe /api/datos, así que se queda solo con el navegador.
+  async loadServerData() {
+    let d;
+    try { const r = await fetch('/api/datos', { cache: 'no-store' }); if (!r.ok) return; d = await r.json(); } catch (e) { return; }
+    if (!d || typeof d !== 'object') return;
+    this.serverOk = true;
+    const srvT = (Array.isArray(d.tareas) ? d.tareas : []).filter(x => x && typeof x.id === 'string');
+    const ids = new Set(srvT.map(x => x.id));
+    const tareas = srvT.concat(this.loadSavedList().filter(x => x && typeof x.id === 'string' && !ids.has(x.id)));
+    const srvC = (Array.isArray(d.consignas) ? d.consignas : []).filter(x => x && typeof x.text === 'string');
+    const txts = new Set(srvC.map(x => x.text.toLowerCase()));
+    const reqs = srvC.concat(this.asstLoadReqs().filter(x => !txts.has(x.text.toLowerCase()))).slice(0, 200);
+    const cfg = this.cleanCfg(Object.assign({}, this.state.cfg, { logo: typeof d.escudo === 'string' && d.escudo ? d.escudo : this.state.cfg.logo }));
+    try {
+      localStorage.setItem('tactics-exercises', JSON.stringify(tareas));
+      localStorage.setItem('tactics-assistant-requests', JSON.stringify(reqs));
+      localStorage.setItem('tactics-config', JSON.stringify(cfg));
+    } catch (e) {}
+    this.setState({ saved: tareas, asstReqs: reqs, cfg: cfg });
+    this.pushServer({ tareas: tareas, consignas: reqs, escudo: cfg.logo });
+  }
+  pushServer(over) {
+    if (!this.serverOk) return;
+    const o = over || {};
+    const body = {
+      tareas: o.tareas || this.loadSavedList(),
+      consignas: o.consignas || this.state.asstReqs,
+      escudo: 'escudo' in o ? o.escudo : this.state.cfg.logo
+    };
+    fetch('/api/datos', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }).catch(() => {});
+  }
   componentDidMount() {
     this.setState({ saved: this.loadSavedList(), cfg: this.loadCfg(), asstReqs: this.asstLoadReqs() });
     this.restoreFile();
+    this.loadServerData();
     this.mv = e => {
       if (this.marq) {
         const p = this.pct(e);
@@ -1470,6 +1509,14 @@ class Component extends DCLogic {
       if (i < 0) return;
       const it = f.items[i];
       f.items[i] = Object.assign({}, it, { sx: cl((it.sx || 1) * k), sy: cl((it.sy || 1) * k) });
+    });
+  }
+  setColor(id, c) {
+    if (!RING_COLORS.some(r => r.v === c)) return;
+    this.mutate(f => {
+      const i = f.items.findIndex(x => x.id === id);
+      if (i < 0) return;
+      f.items[i] = Object.assign({}, f.items[i], { color: c });
     });
   }
   setSize(id, v) {
@@ -2206,7 +2253,7 @@ class Component extends DCLogic {
       this.setState(s => ({ frames: frames, cf: cf, sel: null, orient: orient ? true : s.orient }));
     }
     // Si el asistente local no entiende nada, se pregunta a la IA (servidor local; la clave nunca está en el navegador)
-    if (!changed && noEntendido.length && noEntendido.every(Boolean) && /^https?:$/.test(location.protocol)) {
+    if (!changed && this.serverOk && noEntendido.length && noEntendido.every(Boolean) && /^https?:$/.test(location.protocol)) {
       this.setState({ asstLog: log.concat([{ who: 'a', text: '🤖 Consultando a la IA…' }]).slice(-40), asstDraft: '' });
       this.asstAsk(raw, log);
       return;
@@ -2276,6 +2323,7 @@ class Component extends DCLogic {
     try { localStorage.setItem('tactics-assistant-requests', JSON.stringify(list)); } catch (e) {}
     this.setState({ asstReqs: list });
     this.syncFile({ consignas: list });
+    this.pushServer({ consignas: list });
   }
   asstSaveReq = () => {
     const text = (this.state.asstDraft || '').trim() || this.asstHist[this.asstHist.length - 1] || '';
@@ -2568,6 +2616,9 @@ class Component extends DCLogic {
           ? Math.round(kx * 100) + '%'
           : Math.round(kx * 100) + '×' + Math.round(ky * 100) + '%',
         sizes: SIZE_PRESETS.map(p => { const on = Math.abs(kx - p.v) < 0.01 && Math.abs(ky - p.v) < 0.01; return { label: p.k, title: 'Tamaño ' + p.k + ' (' + Math.round(p.v * 100) + '%)', on: e => { e.stopPropagation(); this.setSize(it.id, p.v); }, style: 'min-width:34px; height:38px; padding:0 8px; borderRadius:6px; border:none; cursor:pointer; fontSize:12px; fontWeight:900; background:' + (on ? '#e30613' : '#1c2027') + '; color:' + (on ? '#fff' : '#e7ebf1') }; }),
+        ringStyle: 'width:100%; height:100%; border-radius:50%; border:0.25cqw solid ' + (RING_COLORS.some(r => r.v === it.color) ? it.color : '#f97316') + '; box-sizing:border-box; box-shadow:0 0.2cqw 0.5cqw rgba(0,0,0,0.4)',
+        ringColors: RING_COLORS.map(r => { const on = (it.color || '#f97316') === r.v; return { title: r.n, on: e => { e.stopPropagation(); this.setColor(it.id, r.v); }, style: 'width:28px; height:28px; borderRadius:50%; cursor:pointer; background:' + r.v + '; border:' + (on ? '3px solid #e30613' : '2px solid #3a414c') }; }),
+        barPos: it.y < 32 ? 'position:absolute; top:100%; left:50%; transform:translate(-50%,14px);' : 'position:absolute; bottom:100%; left:50%; transform:translate(-50%,-14px);',
         stop: e => e.stopPropagation(),
         deselect: e => { e.stopPropagation(); this.setState({ sel: null }); },
         smaller: e => { e.stopPropagation(); this.scale(it.id, 1 / 1.15); },

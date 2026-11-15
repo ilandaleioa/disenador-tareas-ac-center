@@ -271,6 +271,44 @@ def rate_ok():
         return True
 
 
+DATA_FILE = ROOT / "datos" / "ac-center-ejercicios.json"   # tareas, consignas y escudo
+MAX_DATA = 5_000_000       # bytes (incluye el escudo en base64)
+MAX_TASKS = 2000
+MAX_REQS = 200
+LOGO_RE = re.compile(r"^(data:image/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+)?$")
+
+
+def read_datos():
+    try:
+        d = json.loads(DATA_FILE.read_text(encoding="utf-8"))
+        if isinstance(d, dict):
+            return d
+    except (OSError, ValueError):
+        pass
+    return {"formato": "ac-center", "version": 2, "nombre": "AC CENTER", "escudo": "", "tareas": [], "consignas": []}
+
+
+def clean_datos(body):
+    if not isinstance(body, dict):
+        raise ValueError("Formato no válido.")
+    tareas, consignas, escudo = body.get("tareas"), body.get("consignas"), body.get("escudo", "")
+    if not isinstance(tareas, list) or len(tareas) > MAX_TASKS or not all(isinstance(x, dict) for x in tareas):
+        raise ValueError("Lista de tareas no válida.")
+    if not isinstance(consignas, list) or len(consignas) > MAX_REQS or not all(isinstance(x, dict) for x in consignas):
+        raise ValueError("Lista de consignas no válida.")
+    if not isinstance(escudo, str) or len(escudo) > 300_000 or not LOGO_RE.match(escudo):
+        raise ValueError("Escudo no válido.")
+    return {"formato": "ac-center", "version": 2, "nombre": "AC CENTER", "escudo": escudo,
+            "tareas": tareas, "consignas": consignas}
+
+
+def write_datos(obj):
+    DATA_FILE.parent.mkdir(exist_ok=True)
+    tmp = DATA_FILE.with_suffix(".tmp")
+    tmp.write_text(json.dumps(obj, ensure_ascii=False, indent=2), encoding="utf-8")
+    os.replace(tmp, DATA_FILE)
+
+
 ALLOWED_HOSTS = {f"127.0.0.1:{PORT}", f"localhost:{PORT}"}
 ALLOWED_ORIGINS = {f"http://{h}" for h in ALLOWED_HOSTS}
 
@@ -305,11 +343,29 @@ class Handler(BaseHTTPRequestHandler):
             return self._send(200, (ROOT / "index.html").read_bytes(), "text/html; charset=utf-8")
         if path == "/api/estado":
             return self._json(200, {"ia": bool(os.environ.get("ANTHROPIC_API_KEY"))})
+        if path == "/api/datos":
+            return self._json(200, read_datos())
         self._json(404, {"error": "No encontrado."})
 
     def do_POST(self):
         if not self._host_ok() or self.headers.get("Origin", "") not in ALLOWED_ORIGINS:
             return self._json(403, {"error": "Origen no permitido."})
+        if self.path.split("?", 1)[0] == "/api/datos":
+            if self.headers.get("Content-Type", "").split(";")[0].strip() != "application/json":
+                return self._json(415, {"error": "Se esperaba JSON."})
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+            except ValueError:
+                length = -1
+            if length <= 0 or length > MAX_DATA:
+                return self._json(413, {"error": "Datos demasiado grandes."})
+            try:
+                write_datos(clean_datos(json.loads(self.rfile.read(length))))
+            except (ValueError, UnicodeDecodeError) as e:
+                return self._json(400, {"error": str(e) if isinstance(e, ValueError) and not isinstance(e, json.JSONDecodeError) else "Datos no válidos."})
+            except OSError:
+                return self._json(500, {"error": "No se pudo escribir el archivo de datos."})
+            return self._json(200, {"ok": True})
         if self.path.split("?", 1)[0] != "/api/asistente":
             return self._json(404, {"error": "No encontrado."})
         if not (self.headers.get("Content-Type", "").split(";")[0].strip() == "application/json"):

@@ -376,6 +376,8 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?", 1)[0]
         if path in ("/", "/index.html"):
             return self._send(200, (ROOT / "index.html").read_bytes(), "text/html; charset=utf-8")
+        if path == "/tutorial.html":
+            return self._send(200, (ROOT / "tutorial.html").read_bytes(), "text/html; charset=utf-8")
         if path == "/api/estado":
             return self._json(200, {"ia": bool(os.environ.get("ANTHROPIC_API_KEY"))})
         if path == "/api/datos":

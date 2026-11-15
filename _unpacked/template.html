@@ -554,9 +554,11 @@
       <button sc-camel-on-click="{{ saveExercise }}" style="padding:11px 18px; borderRadius:10px; border:none; background:#2563eb; color:#fff; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; flexShrink:0; whiteSpace:nowrap" style-hover="background:#1d4ed8">GUARDAR</button>
       <div style="marginLeft:auto; display:flex; alignItems:center; flexWrap:wrap; gap:10px; flexShrink:1; minWidth:0">
         <div style="position:relative; flexShrink:0">
+          <a href="tutorial.html" target="_blank" rel="noopener" style="padding:11px 18px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:11px; fontWeight:800; letterSpacing:0.14em; textDecoration:none; whiteSpace:nowrap" style-hover="background:#1c2027">TUTORIAL</a>
           <button sc-camel-on-click="{{ toggleSaved }}" style="padding:11px 18px; borderRadius:10px; border:1px solid #23262d; background:#14171c; color:#e7ebf1; fontSize:11px; fontWeight:800; letterSpacing:0.14em; cursor:pointer; whiteSpace:nowrap" style-hover="background:#1c2027">MIS EJERCICIOS</button>
           <sc-if value="{{ savedOpen }}" hint-placeholder-val="{{ false }}">
-            <div style="position:absolute; top:calc(100% + 8px); right:0; width:280px; maxHeight:360px; overflowY:auto; background:#14171c; border:1px solid #23262d; borderRadius:12px; boxShadow:0 20px 40px rgba(0,0,0,0.5); zIndex:50; padding:8px">
+            <div style="position:absolute; top:calc(100% + 8px); right:0; width:280px; maxHeight:min(480px, calc(100vh - 120px)); display:flex; flexDirection:column; background:#14171c; border:1px solid #23262d; borderRadius:12px; boxShadow:0 20px 40px rgba(0,0,0,0.5); zIndex:50; padding:8px">
+              <div style="flex:1 1 auto; minHeight:0; overflowY:auto">
               <sc-if value="{{ hasSaved }}" hint-placeholder-val="{{ false }}">
                 <sc-for list="{{ savedItems }}" as="s" hint-placeholder-count="0">
                   <sc-if value="{{ s.isHeader }}" hint-placeholder-val="{{ false }}">
@@ -581,7 +583,8 @@
               <sc-if value="{{ noSaved }}" hint-placeholder-val="{{ true }}">
                 <div style="padding:16px 10px; fontSize:11px; color:#6b7482; textAlign:center">Sin ejercicios guardados</div>
               </sc-if>
-              <div style="padding:8px 6px 0; borderTop:1px solid #23262d; marginTop:4px">
+              </div>
+              <div style="flexShrink:0; padding:8px 6px 0; borderTop:1px solid #23262d; marginTop:4px">
                 <sc-if value="{{ fileNotLinked }}" hint-placeholder-val="{{ true }}">
                   <button sc-camel-on-click="{{ linkFile }}" title="Elige tu archivo .json: cada guardado se escribirá directamente en él" style="width:100%; padding:8px; borderRadius:7px; border:1px solid #2563eb; background:#1d3a78; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer">VINCULAR ARCHIVO .JSON</button>
                 </sc-if>
@@ -591,15 +594,16 @@
                     <button sc-camel-on-click="{{ unlinkFile }}" title="Desvincular archivo" style="padding:8px 10px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; cursor:pointer">×</button>
                   </div>
                 </sc-if>
+                <a href="tutorial.html" target="_blank" rel="noopener" title="Cómo guardar tus ejercicios y vincularlos a un archivo JSON" style="display:block; margin-top:6px; padding:7px; borderRadius:7px; border:1px dashed #3a4150; color:#9fb4ff; fontSize:10px; fontWeight:800; letterSpacing:0.08em; textAlign:center; textDecoration:none; cursor:pointer" style-hover="color:#e7ebf1">? TUTORIAL: CÓMO GUARDAR Y VINCULAR</a>
               </div>
-              <div style="display:flex; gap:6px; padding:8px 6px 4px; borderTop:1px solid #23262d; marginTop:4px">
+              <div style="flexShrink:0; display:flex; gap:6px; padding:8px 6px 4px; borderTop:1px solid #23262d; marginTop:4px">
                 <button sc-camel-on-click="{{ exportAll }}" style="flex:1; padding:8px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer" style-hover="background:#2c323b">GUARDAR EJERCICIOS</button>
                 <label style="flex:1; padding:8px; borderRadius:7px; border:1px solid #23262d; background:#1c2027; color:#e7ebf1; fontSize:10px; fontWeight:800; letterSpacing:0.08em; cursor:pointer; textAlign:center" style-hover="background:#2c323b">
                   IMPORTAR
                   <input type="file" accept="application/json" sc-camel-on-change="{{ importAll }}" style="display:none">
                 </label>
               </div>
-              <div style="padding:4px 6px 4px">
+              <div style="flexShrink:0; padding:4px 6px 4px">
                 <button sc-camel-on-click="{{ toggleSaved }}" style="width:100%; padding:8px; borderRadius:7px; border:1px solid #23262d; background:none; color:#8b95a6; fontSize:10px; fontWeight:800; letterSpacing:0.12em; cursor:pointer" style-hover="color:#e7ebf1">CERRAR</button>
               </div>
             </div>
